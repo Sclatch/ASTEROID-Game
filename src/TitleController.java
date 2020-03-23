@@ -5,26 +5,78 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class TitleController {
 
-    @FXML
-    private int selection = 0;
-    @FXML
-    private ImageView spaceBackground;
-    @FXML
-    private Label startLabel;
-    @FXML
-    private Label BGMLabel;
-    @FXML
-    private Label settingsLabel;
-    @FXML
-    private Label quitLabel;
+    private TranslateTransition titleTranslate;
 
     @FXML
+    private VBox titleVBox;
+    @FXML
+    private GridPane BGMGridPane;
+    @FXML
+    private ImageView spaceBackground;
+    //Main menu elements
+    @FXML
+    private Label startLabel, BGMLabel, settingsLabel, quitLabel;
+    //Universal menu elements
+    @FXML
+    private Label backLabel;
+    //BGM menu elements
+    @FXML
+    private Label BGMTitle1, BGMTitle2, BGMTitle3, BGMPreview1, BGMPreview2, BGMPreview3, BGMSelect1, BGMSelect2, BGMSelect3;
+    //Settings menu elements
+    @FXML
+    private Label settingsTitle1, settingsTitle2, settingsTitle3;
+    @FXML
+    private void reset(){
+        backLabel.setOpacity(0);
+        backLabel.setDisable(true);
+        BGMGridPane.setDisable(true);
+        BGMTitle1.setOpacity(0);
+        BGMTitle2.setOpacity(0);
+        BGMTitle3.setOpacity(0);
+        BGMPreview1.setOpacity(0);
+        BGMPreview2.setOpacity(0);
+        BGMPreview3.setOpacity(0);
+        BGMSelect1.setOpacity(0);
+        BGMSelect2.setOpacity(0);
+        BGMSelect3.setOpacity(0);
+        //        settingsTitle1.setOpacity(0);
+//        settingsTitle2.setOpacity(0);
+//        settingsTitle3.setOpacity(0);
+    }
+    @FXML
+    private void goBack(){
+        reset();
+        startLabel.setOpacity(1);
+        BGMLabel.setOpacity(1);
+        settingsLabel.setOpacity(1);
+        quitLabel.setOpacity(1);
+    }
+    @FXML
+    private TranslateTransition menuTransitionEnter(int toHeight){
+        TranslateTransition transition = new TranslateTransition(Duration.millis(500), titleVBox);
+        transition.setFromY(0);
+        transition.setToY(toHeight);
+        return transition;
+    }
+    @FXML
+    private TranslateTransition menuTransitionExit(){
+        TranslateTransition transition = new TranslateTransition(Duration.millis(500), titleVBox);
+        transition.setFromY(titleVBox.getTranslateY());
+        transition.setToY(0);
+        return transition;
+    }
+    @FXML
     public void initialize(){
+        goBack();
+
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(5000), spaceBackground);
         translateTransition.setFromY(-800);
         translateTransition.setToY(0);
@@ -38,54 +90,66 @@ public class TitleController {
         parallelTransition.setCycleCount(Animation.INDEFINITE);
         parallelTransition.play();
     }
-
     @FXML
-    public void startLabelEnter(){
-        selection = 1;
-        startLabel.setTextFill(Color.RED);
+    private void labelEnter(MouseEvent event) {
+        ((Label)event.getTarget()).setTextFill(Color.RED);
     }
     @FXML
-    public void startLabelExit(){
-        selection = 0;
-        startLabel.setTextFill(Color.WHITE);
-    }
-
-    @FXML
-    public void BGMLabelEnter(){
-        selection = 2;
-        BGMLabel.setTextFill(Color.RED);
+    private void labelExit(MouseEvent event) {
+        ((Label)event.getTarget()).setTextFill(Color.WHITE);
     }
     @FXML
-    public void BGMLabelExit(){
-        selection = 0;
-        BGMLabel.setTextFill(Color.WHITE);
+    public void BGMLabelClick(){
+        startLabel.setOpacity(0);
+        settingsLabel.setOpacity(0);
+        quitLabel.setOpacity(0);
+        titleVBox.setDisable(true);
+        titleTranslate = menuTransitionEnter(-135);
+        titleTranslate.play();
+        titleTranslate.setOnFinished(actionEvent -> {
+            backLabel.setOpacity(1);
+            backLabel.setDisable(false);
+            BGMTitle1.setOpacity(1);
+            BGMTitle2.setOpacity(1);
+            BGMTitle3.setOpacity(1);
+            BGMPreview1.setOpacity(1);
+            BGMPreview2.setOpacity(1);
+            BGMPreview3.setOpacity(1);
+            BGMSelect1.setOpacity(1);
+            BGMSelect2.setOpacity(1);
+            BGMSelect3.setOpacity(1);
+            BGMGridPane.setDisable(false);
+        });
     }
-
     @FXML
-    public void settingsLabelEnter(){
-        selection = 3;
-        settingsLabel.setTextFill(Color.RED);
+    public void settingsLabelClick(){
+        startLabel.setOpacity(0);
+        BGMLabel.setOpacity(0);
+        quitLabel.setOpacity(0);
+        titleVBox.setDisable(true);
+        titleTranslate = menuTransitionEnter(-188);
+        titleTranslate.play();
+        titleTranslate.setOnFinished(actionEvent -> {
+            backLabel.setOpacity(1);
+            backLabel.setDisable(false);
+//        settingsTitle1.setOpacity(1);
+//        settingsTitle2.setOpacity(1);
+//        settingsTitle3.setOpacity(1);
+        });
     }
     @FXML
-    public void settingsLabelExit(){
-        selection = 0;
-        settingsLabel.setTextFill(Color.WHITE);
+    private void backLabelClick(){
+        reset();
+        titleTranslate = menuTransitionExit();
+        titleTranslate.play();
+        titleTranslate.setOnFinished(actionEvent -> {
+            goBack();
+            titleVBox.setDisable(false);
+        });
     }
-
-    @FXML
-    public void quitLabelEnter(){
-        selection = 4;
-        quitLabel.setTextFill(Color.RED);
-    }
-
-    @FXML
-    public void quitLabelExit(){
-        selection = 0;
-        quitLabel.setTextFill(Color.WHITE);
-    }
-
     @FXML
     public void quitLabelClick(){
         System.exit(0);
     }
+
 }

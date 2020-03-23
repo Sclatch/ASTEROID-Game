@@ -5,10 +5,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TitleController">
    <children>
@@ -18,24 +20,24 @@
             <Image url="@Misc/spaceBackground.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="430.0" layoutY="335.0" prefHeight="343.0" prefWidth="420.0" spacing="5.0">
+      <VBox fx:id="titleVBox" alignment="CENTER" layoutX="430.0" layoutY="335.0" prefHeight="343.0" prefWidth="420.0" spacing="5.0" AnchorPane.topAnchor="335.0">
          <children>
-            <Label fx:id="startLabel" onMouseEntered="#startLabelEnter" onMouseExited="#startLabelExit" text="START" textFill="WHITE">
+            <Label fx:id="startLabel" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="START" textFill="WHITE">
                <font>
                   <Font name="Zig" size="42.0" />
                </font>
             </Label>
-            <Label fx:id="BGMLabel" onMouseEntered="#BGMLabelEnter" onMouseExited="#BGMLabelExit" text="BGM" textFill="WHITE">
+            <Label fx:id="BGMLabel" onMouseClicked="#BGMLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="BGM" textFill="WHITE">
                <font>
                   <Font name="Zig" size="42.0" />
                </font>
             </Label>
-            <Label fx:id="settingsLabel" onMouseEntered="#settingsLabelEnter" onMouseExited="#settingsLabelExit" text="SETTINGS" textFill="WHITE">
+            <Label fx:id="settingsLabel" onMouseClicked="#settingsLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SETTINGS" textFill="WHITE">
                <font>
                   <Font name="Zig" size="42.0" />
                </font>
             </Label>
-            <Label fx:id="quitLabel" onMouseClicked="#quitLabelClick" onMouseEntered="#quitLabelEnter" onMouseExited="#quitLabelExit" text="QUIT" textFill="WHITE">
+            <Label fx:id="quitLabel" onMouseClicked="#quitLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="QUIT" textFill="WHITE">
                <font>
                   <Font name="Zig" size="42.0" />
                </font>
@@ -55,6 +57,72 @@
       <Label alignment="CENTER" text="ASTEROIDS" textAlignment="CENTER" textFill="#ff00f6" AnchorPane.leftAnchor="321.5" AnchorPane.topAnchor="100.0">
          <font>
             <Font name="Simson" size="128.0" />
+         </font>
+      </Label>
+      <GridPane fx:id="BGMGridPane" alignment="CENTER" disable="true" hgap="50.0" layoutY="-17.0" prefHeight="107.0" prefWidth="300.0" scaleX="2.0" scaleY="2.0" AnchorPane.leftAnchor="540.0" AnchorPane.topAnchor="480.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="BGMTitle1" text="BGM1" textFill="WHITE">
+               <font>
+                  <Font name="Zig" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMTitle2" text="BGM2" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Zig" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMTitle3" text="BGM3" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Zig" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMPreview1" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Zig" size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMSelect1" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Zig" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMPreview2" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Zig" size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMPreview3" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Zig" size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMSelect2" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Zig" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="BGMSelect3" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Zig" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Label fx:id="backLabel" onMouseClicked="#backLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="BACK&lt;" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="700.0">
+         <font>
+            <Font name="Zig" size="18.0" />
          </font>
       </Label>
    </children>
