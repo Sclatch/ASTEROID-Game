@@ -3,6 +3,7 @@ import javafx.animation.SequentialTransition;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,23 +20,34 @@ public class Intro {
     private ImageView studioLogo = new ImageView();
     private ImageView javaFXLogo = new ImageView();
 
-    private FadeTransition fadeIn(Node node){
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000), node);
+    //Change these values when modifying fade times
+    private int fadeDelayInOut = 1000;
+    private int fadeDelaySustain = 1000;
+
+    public FadeTransition fadeIn(Node node){
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(fadeDelayInOut), node);
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         return fadeTransition;
     }
 
     private FadeTransition fadeOut(Node node){
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000), node);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(fadeDelayInOut), node);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         return fadeTransition;
     }
 
+    private FadeTransition fadePause(Node node){
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(fadeDelaySustain), node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(1);
+        return fadeTransition;
+    }
+
     private SequentialTransition fadeInOut(Node node) {
         SequentialTransition sequentialTransition = new SequentialTransition();
-        sequentialTransition.getChildren().addAll(fadeIn(node), fadeOut(node));
+        sequentialTransition.getChildren().addAll(fadeIn(node), fadePause(node), fadeOut(node));
         return sequentialTransition;
     }
 
@@ -50,12 +62,11 @@ public class Intro {
         javaFXLogo.setOpacity(0);
     }
 
-    public void play(Stage stage) {
+    public SequentialTransition play(Stage stage) {
         SequentialTransition sequentialTransition = new SequentialTransition();
         sequentialTransition.getChildren().addAll(fadeInOut(disclaimer),
                                                     fadeInOut(studioLogo),
                                                         fadeInOut(javaFXLogo));
-        sequentialTransition.play();
         GridPane gridPane = new GridPane();
         gridPane.add(disclaimer,0 ,0);
         gridPane.add(studioLogo,0, 0);
@@ -66,7 +77,8 @@ public class Intro {
         GridPane.setHalignment(javaFXLogo, HPos.CENTER);
         Scene scene = new Scene(gridPane, Color.BLACK);
         stage.setScene(scene);
-        stage.show();
+
+        return sequentialTransition;
     }
 
 }
