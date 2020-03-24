@@ -23,7 +23,7 @@ public class TitleController {
     private ImageView spaceBackground;
     //Main menu elements
     @FXML
-    private Label startLabel, BGMLabel, settingsLabel, quitLabel;
+    private Label startLabel, leaderboardLabel, BGMLabel, settingsLabel, quitLabel;
     //Universal menu elements
     @FXML
     private Label backLabel;
@@ -33,6 +33,15 @@ public class TitleController {
     //Settings menu elements
     @FXML
     private Label settingsTitle1, settingsTitle2, settingsTitle3;
+    @FXML
+    private void isolateLabel(Label label){
+        startLabel.setOpacity(0);
+        leaderboardLabel.setOpacity(0);
+        BGMLabel.setOpacity(0);
+        settingsLabel.setOpacity(0);
+        quitLabel.setOpacity(0);
+        label.setOpacity(1);
+    }
     @FXML
     private void reset(){
         backLabel.setOpacity(0);
@@ -55,6 +64,7 @@ public class TitleController {
     private void goBack(){
         reset();
         startLabel.setOpacity(1);
+        leaderboardLabel.setOpacity(1);
         BGMLabel.setOpacity(1);
         settingsLabel.setOpacity(1);
         quitLabel.setOpacity(1);
@@ -99,12 +109,21 @@ public class TitleController {
         ((Label)event.getTarget()).setTextFill(Color.WHITE);
     }
     @FXML
-    public void BGMLabelClick(){
-        startLabel.setOpacity(0);
-        settingsLabel.setOpacity(0);
-        quitLabel.setOpacity(0);
+    private void leaderboardLabelClick(){
+        isolateLabel(leaderboardLabel);
         titleVBox.setDisable(true);
         titleTranslate = menuTransitionEnter(-135);
+        titleTranslate.play();
+        titleTranslate.setOnFinished(actionEvent -> {
+            backLabel.setOpacity(1);
+            backLabel.setDisable(false);
+        });
+    }
+    @FXML
+    public void BGMLabelClick(){
+        isolateLabel(BGMLabel);
+        titleVBox.setDisable(true);
+        titleTranslate = menuTransitionEnter(-182);
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
@@ -123,11 +142,9 @@ public class TitleController {
     }
     @FXML
     public void settingsLabelClick(){
-        startLabel.setOpacity(0);
-        BGMLabel.setOpacity(0);
-        quitLabel.setOpacity(0);
+        isolateLabel(settingsLabel);
         titleVBox.setDisable(true);
-        titleTranslate = menuTransitionEnter(-188);
+        titleTranslate = menuTransitionEnter(-235);
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
