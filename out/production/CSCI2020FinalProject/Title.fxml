@@ -54,11 +54,11 @@
          </children>
       </VBox>
       <Label layoutX="42.0" layoutY="748.0" text="Version a0.1" textFill="WHITE" />
-      <Label alignment="CENTER" text="ASTEROIDS" textAlignment="CENTER" textFill="#ff00f6" AnchorPane.leftAnchor="321.5" AnchorPane.topAnchor="100.0">
-         <font>
-            <Font name="Simson" size="128.0" />
-         </font>
-      </Label>
+      <ImageView layoutX="160.0" layoutY="151.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="509.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="151.0">
+         <image>
+            <Image url="@Misc/logo.png" />
+         </image>
+      </ImageView>
       <GridPane fx:id="BGMGridPane" alignment="CENTER" disable="true" hgap="50.0" layoutY="-17.0" prefHeight="107.0" prefWidth="300.0" scaleX="2.0" scaleY="2.0" AnchorPane.leftAnchor="540.0" AnchorPane.topAnchor="480.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
