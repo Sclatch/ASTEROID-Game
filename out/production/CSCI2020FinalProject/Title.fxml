@@ -15,7 +15,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TitleController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#002e51" height="800.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" />
-      <ImageView fx:id="spaceBackground" layoutX="256.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="256.0">
+      <ImageView fx:id="spaceBackground" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <image>
             <Image url="@Misc/spaceBackground.png" />
          </image>
