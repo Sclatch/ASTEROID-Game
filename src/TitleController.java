@@ -87,7 +87,7 @@ public class TitleController {
     public void initialize(){
         goBack();
 
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(5000), spaceBackground);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(20000), spaceBackground);
         translateTransition.setFromY(-800);
         translateTransition.setToY(0);
         translateTransition.setInterpolator(Interpolator.LINEAR);
