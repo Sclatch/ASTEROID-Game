@@ -21,7 +21,6 @@ public class GameSceneController {
     private int sensitivity = 10;
 
     private String selectedMusic = Main.selectedMusic;
-    private int sensitivity = 5;
 
     private int score = 0;
     @FXML private Label scoreLabel;
