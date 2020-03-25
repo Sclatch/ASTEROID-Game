@@ -1,20 +1,26 @@
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class TitleController {
 
     private TranslateTransition titleTranslate;
 
+    @FXML
+    private Scene titleScene;
     @FXML
     private VBox titleVBox;
     @FXML
@@ -107,6 +113,26 @@ public class TitleController {
     @FXML
     private void labelExit(MouseEvent event) {
         ((Label)event.getTarget()).setTextFill(Color.WHITE);
+    }
+    @FXML
+    private void startLabelClick(MouseEvent event) {
+        FadeTransition fadeTransition = new Intro().fadeOut(((Node)event.getSource()).getParent().getParent());
+        fadeTransition.play();
+        fadeTransition.setOnFinished(actionEvent -> {
+            Scene gameScene = null;
+            try {
+                gameScene = FXMLLoader.load(getClass().getResource("GameScene.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+            gameScene.getRoot().setOpacity(0);
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(gameScene);
+            FadeTransition fadeTransition2 = new Intro().fadeIn(gameScene.getRoot());
+            fadeTransition2.play();
+            stage.show();
+        });
     }
     @FXML
     private void leaderboardLabelClick(){

@@ -27,7 +27,7 @@
       </ImageView>
       <VBox fx:id="titleVBox" alignment="CENTER" layoutX="430.0" layoutY="335.0" prefHeight="343.0" prefWidth="420.0" spacing="5.0" AnchorPane.topAnchor="335.0">
          <children>
-            <Label fx:id="startLabel" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="START" textFill="WHITE">
+            <Label fx:id="startLabel" onMouseClicked="#startLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="START" textFill="WHITE">
                <font>
                   <Font size="42.0" />
                </font>

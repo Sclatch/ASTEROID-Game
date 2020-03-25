@@ -31,7 +31,7 @@ public class Intro {
         return fadeTransition;
     }
 
-    private FadeTransition fadeOut(Node node){
+    public FadeTransition fadeOut(Node node){
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(fadeDelayInOut), node);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
