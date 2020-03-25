@@ -1,34 +1,41 @@
-import javafx.animation.AnimationTimer;
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class GameSceneController {
 
     //Move to constant settings later
-    private int sensitivity = 5;
+    private int sensitivity = 10;
     private int score = 0;
     @FXML private Label scoreLabel;
     private boolean moveLeft = false, moveRight = false;
+
     private AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
             if(moveLeft){
-                spaceship.setTranslateX(spaceship.getTranslateX() - sensitivity);
+                if(spaceship.getTranslateX() > -640) {
+                    spaceship.setTranslateX(spaceship.getTranslateX() - sensitivity);
+                }
             }
             else if (moveRight){
-                spaceship.setTranslateX(spaceship.getTranslateX() + sensitivity);
+                if(spaceship.getTranslateX() < 580) {
+                    spaceship.setTranslateX(spaceship.getTranslateX() + sensitivity);
+                }
             }
+
             score += 1;
             scoreLabel.setText(Integer.toString(score));
         }
@@ -36,9 +43,26 @@ public class GameSceneController {
 
     @FXML private ImageView spaceship;
 
+    @FXML private ImageView asteroids1,asteroids2,asteroids3,asteroids4;
+
+    @FXML private ImageView gameBackground;
+
     @FXML
     public void initialize() {
         animationTimer.start();
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), gameBackground);
+        translateTransition.setFromY(-1600);
+        translateTransition.setToY(0);
+        translateTransition.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition translateTransition2 = new TranslateTransition(Duration.millis(0), gameBackground);
+        translateTransition2.setFromY(0);
+        translateTransition2.setToY(-1600);
+
+        ParallelTransition parallelTransition = new ParallelTransition(translateTransition, translateTransition2);
+        parallelTransition.setCycleCount(Animation.INDEFINITE);
+        parallelTransition.play();
     }
 
     @FXML

@@ -11,12 +11,32 @@
 <Scene fill="BLACK" onKeyPressed="#isKeyPressed" onKeyReleased="#isKeyReleased" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSceneController">
     <AnchorPane prefHeight="800.0" prefWidth="1280.0">
       <children>
-         <ImageView fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" scaleX="3.0" AnchorPane.leftAnchor="427.0">
+         <ImageView fx:id="gameBackground" fitHeight="2400.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Misc/spaceBackgroundGame.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="spaceship" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="700.0">
+         <ImageView fx:id="asteroids4" fitHeight="150.0" fitWidth="200.0" layoutX="370.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@Textures/asteroids4.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="asteroids3" fitHeight="150.0" fitWidth="200.0" layoutX="552.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@Textures/asteroids3.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="asteroids2" fitHeight="150.0" fitWidth="200.0" layoutX="735.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@Textures/asteroids2.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="asteroids1" fitHeight="150.0" fitWidth="200.0" layoutX="906.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@Textures/asteroids1.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="spaceship" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="640.0" AnchorPane.topAnchor="700.0">
             <image>
                <Image url="@Textures/Ship.png" />
             </image>
