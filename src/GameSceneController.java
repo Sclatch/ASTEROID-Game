@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -18,25 +19,33 @@ public class GameSceneController {
 
 
     //Move to constant settings later
-    private int sensitivity = 10;
+    private int sensitivity = 15;
 
     private String selectedMusic = Main.selectedMusic;
 
     private int score = 0;
     @FXML private Label scoreLabel;
     private boolean moveLeft = false, moveRight = false;
+    private int moveSlow = 0;
 
     private AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            if(moveLeft){
+            if(moveLeft && !moveRight){
                 if(spaceship.getTranslateX() > -640) {
-                    spaceship.setTranslateX(spaceship.getTranslateX() - sensitivity);
+                    spaceship.setTranslateX(spaceship.getTranslateX() - sensitivity + (moveSlow * 10));
+                }
+                else if(spaceship.getTranslateX() == -640){
+                    spaceship.setTranslateX(spaceship.getTranslateX() - 5);
                 }
             }
-            else if (moveRight){
+
+            if (moveRight && !moveLeft){
                 if(spaceship.getTranslateX() < 580) {
-                    spaceship.setTranslateX(spaceship.getTranslateX() + sensitivity);
+                    spaceship.setTranslateX(spaceship.getTranslateX() + sensitivity - (moveSlow * 10));
+                }
+                else if (spaceship.getTranslateX() == 580){
+                    spaceship.setTranslateX(spaceship.getTranslateX() + 5);
                 }
             }
 
@@ -80,17 +89,21 @@ public class GameSceneController {
     private void isKeyPressed(KeyEvent keyEvent){
         if (keyEvent.getCode() == KeyCode.LEFT) {
             moveLeft = true;
-            moveRight = false;
 //            //System.out.println(spaceship.getTranslateX());//DEBUG
             keyEvent.consume();
         }
-        else if (keyEvent.getCode() == KeyCode.RIGHT) {
+        if (keyEvent.getCode() == KeyCode.RIGHT) {
             moveRight = true;
-            moveLeft = false;
 //            //System.out.println(spaceship.getTranslateX());//DEBUG
             keyEvent.consume();
         }
-        else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+
+        if (keyEvent.getCode() == KeyCode.SHIFT){
+            moveSlow = 1;
+            keyEvent.consume();
+        }
+
+        if (keyEvent.getCode() == KeyCode.ESCAPE) {
             animationTimer.stop();
             moveRight = false;
             moveLeft = false;
@@ -115,10 +128,19 @@ public class GameSceneController {
     }
     @FXML
     private void isKeyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.LEFT || keyEvent.getCode() == KeyCode.RIGHT) {
+
+        if (keyEvent.getCode() == KeyCode.LEFT){
             moveLeft = false;
+            keyEvent.consume();
+        }
+
+        if (keyEvent.getCode() == KeyCode.RIGHT){
             moveRight = false;
-//            //System.out.println(spaceship.getTranslateX());//DEBUG
+            keyEvent.consume();
+        }
+
+        if(keyEvent.getCode() == KeyCode.SHIFT){
+            moveSlow = 0;
             keyEvent.consume();
         }
     }
