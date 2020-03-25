@@ -66,7 +66,6 @@ public class GameSceneController {
         }
         else if (keyEvent.getCode() == KeyCode.ESCAPE) {
             animationTimer.stop();
-            Main.music.play();
             moveRight = false;
             moveLeft = false;
             FadeTransition fadeTransition = new Intro().fadeOut(((Scene)keyEvent.getSource()).getRoot());

@@ -113,6 +113,9 @@ public class TitleController {
         parallelTransition.play();
 
         //start playing music for main menu
+        if(Main.firstStartup==false) {
+            Main.music.stop();
+        }
         Main.music.setSoundFile("menuMusic");
         Main.music.openSoundFile();
         Main.music.play();
@@ -296,11 +299,12 @@ public class TitleController {
     @FXML
     private void backLabelClick(){
         reset();
-
-        Main.music.stop();
-        Main.music.setSoundFile("menuMusic");
-        Main.music.openSoundFile();
-        Main.music.play(menuThemeTime);
+        if(playingPreview1 || playingPreview2 || playingPreview3) {
+            Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
 
         titleTranslate = menuTransitionExit();
         titleTranslate.play();

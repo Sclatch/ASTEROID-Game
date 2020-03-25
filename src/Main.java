@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Main extends Application {
     public static Music music = new Music();
     public static String selectedMusic = "LostFuture";
+    public static boolean firstStartup = true;
 
     @Override
     public void start(Stage stage) {
@@ -42,6 +43,7 @@ public class Main extends Application {
             stage.setScene(menuScene);
             stage.show();
             fadeTransition.play();
+            firstStartup=false;
         });
 
 
