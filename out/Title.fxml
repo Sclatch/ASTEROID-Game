@@ -74,17 +74,17 @@
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="BGMTitle1" text="BGM1" textFill="WHITE">
+            <Label fx:id="BGMTitle1" text="LOST FUTURE" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="BGMTitle2" text="BGM2" textFill="WHITE" GridPane.rowIndex="2">
+            <Label fx:id="BGMTitle2" text="SPACEFLIGHT" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="BGMTitle3" text="BGM3" textFill="WHITE" GridPane.rowIndex="4">
+            <Label fx:id="BGMTitle3" text="STARDUST" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
