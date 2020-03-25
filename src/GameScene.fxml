@@ -16,22 +16,22 @@
                <Image url="@Misc/spaceBackgroundGame.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="asteroids4" fitHeight="150.0" fitWidth="200.0" layoutX="370.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="asteroid4" fitHeight="150.0" fitWidth="200.0" layoutX="370.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Textures/asteroids4.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="asteroids3" fitHeight="150.0" fitWidth="200.0" layoutX="552.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="asteroid3" fitHeight="150.0" fitWidth="200.0" layoutX="552.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Textures/asteroids3.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="asteroids2" fitHeight="150.0" fitWidth="200.0" layoutX="735.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="asteroid2" fitHeight="150.0" fitWidth="200.0" layoutX="735.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Textures/asteroids2.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="asteroids1" fitHeight="150.0" fitWidth="200.0" layoutX="906.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="asteroid1" fitHeight="150.0" fitWidth="200.0" layoutX="906.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Textures/asteroids1.png" />
             </image>

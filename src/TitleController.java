@@ -165,6 +165,7 @@ public class TitleController {
         titleVBox.setDisable(true);
         titleTranslate = menuTransitionEnter(-182);
         titleTranslate.play();
+        menuThemeTime = Main.music.pause();
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
@@ -184,11 +185,7 @@ public class TitleController {
     public void BGMPreview1Click() {
         if(!playingPreview1) {
             //if main menu music is playing, save it's timestamp
-            if(!playingPreview2 && !playingPreview3) {
-                menuThemeTime = Main.music.pause();
-            }
-            //otherwise just stop the music preview that is running
-            else {
+            if(playingPreview2 || playingPreview3) {
                 Main.music.stop();
             }
             playingPreview1=true;
@@ -203,20 +200,13 @@ public class TitleController {
         else if(playingPreview1) {
             playingPreview1=false;
             Main.music.stop();
-            Main.music.setSoundFile("menuMusic");
-            Main.music.openSoundFile();
-            Main.music.play(menuThemeTime);
         }
     }
     @FXML
     public void BGMPreview2Click() {
         if(!playingPreview2) {
             //if main menu music is playing, save it's timestamp
-            if(!playingPreview1 && !playingPreview3) {
-                menuThemeTime = Main.music.pause();
-            }
-            //otherwise just stop the music preview that is running
-            else {
+            if(playingPreview1 || playingPreview3) {
                 Main.music.stop();
             }
             playingPreview1=false;
@@ -231,19 +221,12 @@ public class TitleController {
         else if(playingPreview2) {
             playingPreview2=false;
             Main.music.stop();
-            Main.music.setSoundFile("menuMusic");
-            Main.music.openSoundFile();
-            Main.music.play(menuThemeTime);
         }
     }
     public void BGMPreview3Click() {
         if(!playingPreview3) {
             //if main menu music is playing, save it's timestamp
-            if(!playingPreview1 && !playingPreview2) {
-                menuThemeTime = Main.music.pause();
-            }
-            //otherwise just stop the music preview that is running
-            else {
+            if(playingPreview1 || playingPreview2) {
                 Main.music.stop();
             }
             playingPreview1=false;
@@ -258,9 +241,6 @@ public class TitleController {
         else if(playingPreview3) {
             playingPreview3=false;
             Main.music.stop();
-            Main.music.setSoundFile("menuMusic");
-            Main.music.openSoundFile();
-            Main.music.play(menuThemeTime);
         }
     }
     @FXML
@@ -301,10 +281,10 @@ public class TitleController {
         reset();
         if(playingPreview1 || playingPreview2 || playingPreview3) {
             Main.music.stop();
-            Main.music.setSoundFile("menuMusic");
-            Main.music.openSoundFile();
-            Main.music.play(menuThemeTime);
         }
+        Main.music.setSoundFile("menuMusic");
+        Main.music.openSoundFile();
+        Main.music.play(menuThemeTime);
 
         titleTranslate = menuTransitionExit();
         titleTranslate.play();

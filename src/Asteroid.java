@@ -1,12 +1,19 @@
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 
-public class Asteroids extends GameSceneController{
+public class Asteroid {
+    @FXML private ImageView asteroid1;
+    @FXML private ImageView asteroid2;
+    @FXML private ImageView asteroid3;
+    @FXML private ImageView asteroid4;
+    ImageView[] asteroidSkins = new ImageView[4];
+    //asteroidSkins[0]=asteroid1;
 
+    //[asteroid1, asteroid2, asteroid3, asteroid4]
     private ImageView asteroids;
 
-    public Asteroids(ImageView image) {
-        asteroids = image;
+    public Asteroid() {
+        int skinCode = (int)Math.floor(Math.random()*(4));
     }
 
     @FXML
@@ -23,7 +30,4 @@ public class Asteroids extends GameSceneController{
         return asteroids;
     }
 
-    private int integerGenerator(int min,int max){
-        return (int) (Math.random() * ((max - min) + 1) - min);
-    }
 }

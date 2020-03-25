@@ -56,8 +56,6 @@ public class GameSceneController {
 
     @FXML private ImageView spaceship;
 
-    @FXML private ImageView asteroids1,asteroids2,asteroids3,asteroids4;
-
     @FXML private ImageView gameBackground;
 
     @FXML
