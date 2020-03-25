@@ -2,7 +2,6 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -18,6 +17,13 @@ import java.io.IOException;
 public class TitleController {
 
     private TranslateTransition titleTranslate;
+
+    private static boolean playingPreview1 = false;
+    private static boolean playingPreview2 = false;
+    private static boolean playingPreview3 = false;
+    private static long menuThemeTime;
+
+
 
     @FXML
     private Scene titleScene;
@@ -105,6 +111,14 @@ public class TitleController {
         ParallelTransition parallelTransition = new ParallelTransition(translateTransition, translateTransition2);
         parallelTransition.setCycleCount(Animation.INDEFINITE);
         parallelTransition.play();
+
+        //start playing music for main menu
+        if(Main.firstStartup==false) {
+            Main.music.stop();
+        }
+        Main.music.setSoundFile("menuMusic");
+        Main.music.openSoundFile();
+        Main.music.play();
     }
     @FXML
     private void labelEnter(MouseEvent event) {
@@ -167,6 +181,108 @@ public class TitleController {
         });
     }
     @FXML
+    public void BGMPreview1Click() {
+        if(!playingPreview1) {
+            //if main menu music is playing, save it's timestamp
+            if(!playingPreview2 && !playingPreview3) {
+                menuThemeTime = Main.music.pause();
+            }
+            //otherwise just stop the music preview that is running
+            else {
+                Main.music.stop();
+            }
+            playingPreview1=true;
+            playingPreview2=false;
+            playingPreview3=false;
+
+            Main.music.setSoundFile("LostFuture");
+            Main.music.openSoundFile();
+            Main.music.play();
+
+        }
+        else if(playingPreview1) {
+            playingPreview1=false;
+            Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
+    }
+    @FXML
+    public void BGMPreview2Click() {
+        if(!playingPreview2) {
+            //if main menu music is playing, save it's timestamp
+            if(!playingPreview1 && !playingPreview3) {
+                menuThemeTime = Main.music.pause();
+            }
+            //otherwise just stop the music preview that is running
+            else {
+                Main.music.stop();
+            }
+            playingPreview1=false;
+            playingPreview2=true;
+            playingPreview3=false;
+
+            Main.music.setSoundFile("SpaceFlight");
+            Main.music.openSoundFile();
+            Main.music.play();
+
+        }
+        else if(playingPreview2) {
+            playingPreview2=false;
+            Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
+    }
+    public void BGMPreview3Click() {
+        if(!playingPreview3) {
+            //if main menu music is playing, save it's timestamp
+            if(!playingPreview1 && !playingPreview2) {
+                menuThemeTime = Main.music.pause();
+            }
+            //otherwise just stop the music preview that is running
+            else {
+                Main.music.stop();
+            }
+            playingPreview1=false;
+            playingPreview2=false;
+            playingPreview3=true;
+
+            Main.music.setSoundFile("Stardust");
+            Main.music.openSoundFile();
+            Main.music.play();
+
+        }
+        else if(playingPreview3) {
+            playingPreview3=false;
+            Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
+    }
+    @FXML
+    public void BGMSelect1Click() {
+        Main.selectedMusic = "LostFuture";
+    }
+    @FXML
+    public void BGMSelect2Click() {
+        Main.selectedMusic = "SpaceFlight";
+    }
+    @FXML
+    public void BGMSelect3Click() {
+        Main.selectedMusic = "Stardust";
+    }
+    @FXML
+    public static void resetMusic() {
+        menuThemeTime=0;
+        playingPreview1=false;
+        playingPreview2=false;
+        playingPreview3=false;
+    }
+    @FXML
     public void settingsLabelClick(){
         isolateLabel(settingsLabel);
         titleVBox.setDisable(true);
@@ -183,6 +299,13 @@ public class TitleController {
     @FXML
     private void backLabelClick(){
         reset();
+        if(playingPreview1 || playingPreview2 || playingPreview3) {
+            Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
+
         titleTranslate = menuTransitionExit();
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {

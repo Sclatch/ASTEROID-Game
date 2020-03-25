@@ -16,8 +16,13 @@ import java.io.IOException;
 
 public class GameSceneController {
 
+
     //Move to constant settings later
     private int sensitivity = 10;
+
+    private String selectedMusic = Main.selectedMusic;
+    private int sensitivity = 5;
+
     private int score = 0;
     @FXML private Label scoreLabel;
     private boolean moveLeft = false, moveRight = false;
@@ -49,6 +54,7 @@ public class GameSceneController {
 
     @FXML
     public void initialize() {
+        //game animations
         animationTimer.start();
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), gameBackground);
@@ -63,6 +69,12 @@ public class GameSceneController {
         ParallelTransition parallelTransition = new ParallelTransition(translateTransition, translateTransition2);
         parallelTransition.setCycleCount(Animation.INDEFINITE);
         parallelTransition.play();
+        //music
+        TitleController.resetMusic();
+        Main.music.stop();
+        Main.music.setSoundFile(selectedMusic);
+        Main.music.openSoundFile();
+        Main.music.play();
     }
 
     @FXML
