@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Scene fill="BLACK" onKeyPressed="#isKeyPressed" onKeyReleased="#isKeyReleased" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSceneController">
+    <AnchorPane prefHeight="800.0" prefWidth="1280.0">
+      <children>
+         <ImageView fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" scaleX="3.0" AnchorPane.leftAnchor="427.0">
+            <image>
+               <Image url="@Misc/spaceBackgroundGame.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="spaceship" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="700.0">
+            <image>
+               <Image url="@Textures/Ship.png" />
+            </image>
+         </ImageView>
+         <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="1150.0" AnchorPane.topAnchor="20.0">
+            <children>
+               <Label text="SCORE" textFill="WHITE">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label fx:id="scoreLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="0" textFill="WHITE">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </VBox>
+      </children></AnchorPane>
+</Scene>

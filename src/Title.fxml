@@ -89,18 +89,18 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="BGMPreview1" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1">
+            <Label fx:id="BGMPreview1" onMouseClicked="#BGMPreview1Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
             <Label fx:id="BGMSelect1" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="BGMPreview2" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label fx:id="BGMPreview2" onMouseClicked="#BGMPreview2Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="BGMPreview3" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="BGMPreview3" onMouseClicked="#BGMPreview3Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="10.0" />
                </font>

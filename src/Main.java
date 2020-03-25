@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+    public static Music music = new Music();
 
     @Override
     public void start(Stage stage) {
@@ -40,6 +41,11 @@ public class Main extends Application {
             stage.setScene(menuScene);
             stage.show();
             fadeTransition.play();
+
+            //start playing music for main menu
+            music.setSoundFile("menuMusic");
+            music.openSoundFile();
+            music.play();
         });
 
 
