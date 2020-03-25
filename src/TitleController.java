@@ -2,7 +2,6 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -19,10 +18,10 @@ public class TitleController {
 
     private TranslateTransition titleTranslate;
 
-    private boolean playingPreview1 = false;
-    private boolean playingPreview2 = false;
-    private boolean playingPreview3 = false;
-    private long mainThemeTime;
+    private static boolean playingPreview1 = false;
+    private static boolean playingPreview2 = false;
+    private static boolean playingPreview3 = false;
+    private static long menuThemeTime;
 
 
 
@@ -112,6 +111,11 @@ public class TitleController {
         ParallelTransition parallelTransition = new ParallelTransition(translateTransition, translateTransition2);
         parallelTransition.setCycleCount(Animation.INDEFINITE);
         parallelTransition.play();
+
+        //start playing music for main menu
+        Main.music.setSoundFile("menuMusic");
+        Main.music.openSoundFile();
+        Main.music.play();
     }
     @FXML
     private void labelEnter(MouseEvent event) {
@@ -178,7 +182,7 @@ public class TitleController {
         if(!playingPreview1) {
             //if main menu music is playing, save it's timestamp
             if(!playingPreview2 && !playingPreview3) {
-                mainThemeTime = Main.music.pause();
+                menuThemeTime = Main.music.pause();
             }
             //otherwise just stop the music preview that is running
             else {
@@ -198,8 +202,7 @@ public class TitleController {
             Main.music.stop();
             Main.music.setSoundFile("menuMusic");
             Main.music.openSoundFile();
-            Main.music.play(mainThemeTime);
-
+            Main.music.play(menuThemeTime);
         }
     }
     @FXML
@@ -207,7 +210,7 @@ public class TitleController {
         if(!playingPreview2) {
             //if main menu music is playing, save it's timestamp
             if(!playingPreview1 && !playingPreview3) {
-                mainThemeTime = Main.music.pause();
+                menuThemeTime = Main.music.pause();
             }
             //otherwise just stop the music preview that is running
             else {
@@ -227,16 +230,14 @@ public class TitleController {
             Main.music.stop();
             Main.music.setSoundFile("menuMusic");
             Main.music.openSoundFile();
-            Main.music.play(mainThemeTime);
-
+            Main.music.play(menuThemeTime);
         }
     }
-    @FXML
     public void BGMPreview3Click() {
         if(!playingPreview3) {
             //if main menu music is playing, save it's timestamp
             if(!playingPreview1 && !playingPreview2) {
-                mainThemeTime = Main.music.pause();
+                menuThemeTime = Main.music.pause();
             }
             //otherwise just stop the music preview that is running
             else {
@@ -256,9 +257,27 @@ public class TitleController {
             Main.music.stop();
             Main.music.setSoundFile("menuMusic");
             Main.music.openSoundFile();
-            Main.music.play(mainThemeTime);
-
+            Main.music.play(menuThemeTime);
         }
+    }
+    @FXML
+    public void BGMSelect1Click() {
+        Main.selectedMusic = "LostFuture";
+    }
+    @FXML
+    public void BGMSelect2Click() {
+        Main.selectedMusic = "SpaceFlight";
+    }
+    @FXML
+    public void BGMSelect3Click() {
+        Main.selectedMusic = "Stardust";
+    }
+    @FXML
+    public static void resetMusic() {
+        menuThemeTime=0;
+        playingPreview1=false;
+        playingPreview2=false;
+        playingPreview3=false;
     }
     @FXML
     public void settingsLabelClick(){
@@ -277,6 +296,12 @@ public class TitleController {
     @FXML
     private void backLabelClick(){
         reset();
+
+        Main.music.stop();
+        Main.music.setSoundFile("menuMusic");
+        Main.music.openSoundFile();
+        Main.music.play(menuThemeTime);
+
         titleTranslate = menuTransitionExit();
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {

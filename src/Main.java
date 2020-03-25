@@ -12,12 +12,13 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static Music music = new Music();
+    public static String selectedMusic = "LostFuture";
 
     @Override
     public void start(Stage stage) {
 
         stage.getIcons().add(new Image("/Misc/icon.png"));
-        stage.setTitle("Space Breakout");
+        stage.setTitle("ASTEROIDS");
         stage.setWidth(1280);
         stage.setHeight(800);
 
@@ -41,11 +42,6 @@ public class Main extends Application {
             stage.setScene(menuScene);
             stage.show();
             fadeTransition.play();
-
-            //start playing music for main menu
-            music.setSoundFile("menuMusic");
-            music.openSoundFile();
-            music.play();
         });
 
 

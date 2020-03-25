@@ -94,19 +94,19 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="BGMSelect1" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="BGMSelect1" onMouseClicked="#BGMSelect1Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="BGMPreview2" onMouseClicked="#BGMPreview2Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="BGMPreview3" onMouseClicked="BGMPreview3Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="BGMPreview3" onMouseClicked="#BGMPreview3Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;PREVIEW" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="BGMSelect2" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="BGMSelect3" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="BGMSelect2" onMouseClicked="#BGMSelect2Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="BGMSelect3" onMouseClicked="#BGMSelect3Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="SELECT" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <Label fx:id="backLabel" onMouseClicked="#backLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="BACK&lt;" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="700.0">

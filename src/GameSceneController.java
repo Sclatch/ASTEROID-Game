@@ -15,7 +15,9 @@ import java.io.IOException;
 
 public class GameSceneController {
 
+
     //Move to constant settings later
+    private String selectedMusic = Main.selectedMusic;
     private int sensitivity = 5;
     private int score = 0;
     @FXML private Label scoreLabel;
@@ -38,7 +40,14 @@ public class GameSceneController {
 
     @FXML
     public void initialize() {
+        //game animations
         animationTimer.start();
+        //music
+        TitleController.resetMusic();
+        Main.music.stop();
+        Main.music.setSoundFile(selectedMusic);
+        Main.music.openSoundFile();
+        Main.music.play();
     }
 
     @FXML
@@ -57,6 +66,7 @@ public class GameSceneController {
         }
         else if (keyEvent.getCode() == KeyCode.ESCAPE) {
             animationTimer.stop();
+            Main.music.play();
             moveRight = false;
             moveLeft = false;
             FadeTransition fadeTransition = new Intro().fadeOut(((Scene)keyEvent.getSource()).getRoot());
