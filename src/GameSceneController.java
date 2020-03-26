@@ -1,4 +1,5 @@
 import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -58,64 +62,13 @@ public class GameSceneController {
                     spaceship.setTranslateX(spaceship.getTranslateX() + 5);
                 }
             }
-			
-			//asteroid movement, asteroid collision detection
-            for(int i=0; i<8; i++) {
-                ImageView asteroid=asteroids[i];
-                //lopsided asteroid collision
-                if(i==0 || i==4) {
-                    if (asteroid.getLayoutY() >= 850
-                            //left edge of of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 110
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 15
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() - 28)
-                            //right edge of of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() + 28
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
-                            //closer to center of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 135
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 28
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 28)) {
-                        life--;
-                        asteroid.setLayoutY(Math.random() * (-900) - 100);
-                        asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
-                    }
-                    else {
-                        asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
-                    }
-                }
-                //regular-shaped (rounder) asteroid collision
-                else {
-                    if (asteroid.getLayoutY() >= 850
-                            //left edge of of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() - 40)
-                            //right edge of of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() + 40
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
-                            //closer to center of asteroid
-                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
-                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 40
-                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 40)) {
-                        life--;
-                        asteroid.setLayoutY(Math.random() * (-900) - 100);
-                        asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
-                    }
-                    else {
-                        asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
-                    }
-                }
-            }// end for loop
 
+            if (gunMeter.getHeight() <= 116){
+                gunMeter.setHeight(gunMeter.getHeight() + 4);
+            }
+			
+
+            collisionDetection();
 
             lifeMechanics();
 
@@ -129,6 +82,10 @@ public class GameSceneController {
     @FXML private ImageView starBackground, dustBackground, spaceBackground;
 
     @FXML private ImageView hpBar1, hpBar2, hpBar3;
+
+    @FXML private Rectangle gunMeter;
+
+    @FXML private ImageView laserBeam;
 
 
     @FXML
@@ -202,6 +159,131 @@ public class GameSceneController {
         parallelTransitionSpace.play();
     }
 
+    private void collisionDetection(){
+        //asteroid movement, asteroid collision detection
+        for(int i=0; i<8; i++) {
+            ImageView asteroid=asteroids[i];
+            //lopsided asteroid collision
+            if(i==0 || i==4) {
+                if (asteroid.getLayoutY() >= 850
+                        //left edge of of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 110
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 15
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() - 28)
+                        //right edge of of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() + 28
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
+                        //closer to center of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 135
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() - 28
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() + 28)) {
+                    life--;
+                    asteroid.setLayoutY(Math.random() * (-900) - 100);
+                    asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                }
+                else {
+                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                }
+            }
+            //regular-shaped (rounder) asteroid collision
+            else {
+                if (asteroid.getLayoutY() >= 850
+                        //left edge of of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() - 40)
+                        //right edge of of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() + 40
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
+                        //closer to center of asteroid
+                        || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
+                        && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                        && asteroid.getTranslateX() >= spaceship.getTranslateX() - 40
+                        && asteroid.getTranslateX() <= spaceship.getTranslateX() + 40)) {
+                    life--;
+                    asteroid.setLayoutY(Math.random() * (-900) - 100);
+                    asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                }
+                else {
+                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                }
+            }
+        }// end for loop
+    }
+
+    private void hitDetection(){
+        laserBeam.setTranslateX(spaceship.getTranslateX());
+        laserBeam.setTranslateY(spaceship.getTranslateY());
+        laserBeam.setOpacity(1);
+
+        //asteroid movement, asteroid collision detection
+        for(int i=0; i<8; i++) {
+            ImageView asteroid=asteroids[i];
+            //lopsided asteroid collision
+            if(i==0 || i==4) {
+                if (asteroid.getLayoutY() >= 850
+                        //left edge of of asteroid
+                        || (
+                        asteroid.getTranslateX() >= laserBeam.getTranslateX() - 85
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() - 28)
+                        //right edge of of asteroid
+                        || (
+                        asteroid.getTranslateX() >= laserBeam.getTranslateX() + 28
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() + 85)
+                        //closer to center of asteroid
+                        || (asteroid.getTranslateX() >= laserBeam.getTranslateX() - 28
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() + 28)) {
+                    asteroid.setLayoutY(Math.random() * (-900) - 100);
+                    asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                }
+                else {
+                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                }
+            }
+            //regular-shaped (rounder) asteroid collision
+            else {
+                if (asteroid.getLayoutY() >= 850
+                        //left edge of of asteroid
+                        || (asteroid.getTranslateX() >= laserBeam.getTranslateX() - 85
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() - 40)
+                        //right edge of of asteroid
+                        || (asteroid.getTranslateX() >= laserBeam.getTranslateX() + 40
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() + 85)
+                        //closer to center of asteroid
+                        || (asteroid.getTranslateX() >= laserBeam.getTranslateX() - 40
+                        && asteroid.getTranslateX() <= laserBeam.getTranslateX() + 40)) {
+                    asteroid.setLayoutY(Math.random() * (-900) - 100);
+                    asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                }
+                else {
+                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                }
+            }
+        }// end for loop
+
+        FadeTransition laserDecay = new FadeTransition(Duration.millis(300),laserBeam);
+        laserDecay.setInterpolator(Interpolator.EASE_IN);
+        laserDecay.setToValue(0);
+        laserDecay.play();
+
+        ScaleTransition laserShrink = new ScaleTransition(Duration.millis(300),laserBeam);
+        laserShrink.setInterpolator(Interpolator.EASE_IN);
+        laserShrink.setToX(0);
+
+        ScaleTransition laserGrow = new ScaleTransition(Duration.millis(0),laserBeam);
+        laserGrow.setToX(1);
+
+        ParallelTransition laser = new ParallelTransition(laserShrink,laserGrow);
+        laser.play();
+    }
+
     private void lifeMechanics(){
         if (life == 3){
             hpBar1.setOpacity(100);
@@ -243,6 +325,17 @@ public class GameSceneController {
 
         if (keyEvent.getCode() == KeyCode.SHIFT){
             moveSlow = 1;
+            keyEvent.consume();
+        }
+
+        if (keyEvent.getCode() == KeyCode.Z){
+            hitDetection();
+            if (gunMeter.getHeight() > 70) {
+                gunMeter.setHeight(gunMeter.getHeight() - 70);
+            }
+            else{
+                gunMeter.setHeight(0);
+            }
             keyEvent.consume();
         }
 
