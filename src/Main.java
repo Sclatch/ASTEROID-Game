@@ -12,14 +12,14 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static Music music = new Music();
-    public static String selectedMusic = "LostFuture";
+    public static String selectedMusic = "Stardust";
     public static boolean firstStartup = true;
 
     @Override
     public void start(Stage stage) throws IOException {
 
         stage.getIcons().add(new Image("/Misc/icon.png"));
-        stage.setTitle("ASTEROIDS");
+        stage.setTitle("JKMN-ASTEROIDS");
         stage.setWidth(1280);
         stage.setHeight(800);
 
@@ -29,9 +29,9 @@ public class Main extends Application {
         SequentialTransition intro = new Intro().play(stage);
         stage.show();
         intro.play();
-        Main.music.setSoundFile("menuMusic");
-        Main.music.openSoundFile();
-        Main.music.playLong(59000000);
+        music.setSoundFile("menuMusic");
+        music.openSoundFile();
+        music.playLong(59000000);
 
         //when intro animation is finished, load in main menu
         intro.setOnFinished(actionEvent -> {
