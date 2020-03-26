@@ -15,9 +15,7 @@ import java.io.IOException;
 
 public class GameSceneController {
 
-
-    //Move to constant settings later
-    private int sensitivity = 15;
+    private int sensitivity = ConstantSettings.settingsValues[2];
 
     private String selectedMusic = Main.selectedMusic;
 

@@ -16,12 +16,14 @@ public class Main extends Application {
     public static boolean firstStartup = true;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         stage.getIcons().add(new Image("/Misc/icon.png"));
         stage.setTitle("ASTEROIDS");
         stage.setWidth(1280);
         stage.setHeight(800);
+
+        ConstantSettings.init();
 
         //intro scene, with studio title and javafx logo
         SequentialTransition intro = new Intro().play(stage);

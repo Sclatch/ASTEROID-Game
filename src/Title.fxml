@@ -133,7 +133,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="musicVolDN" layoutX="242.0" layoutY="4.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1">
+            <Label fx:id="musicVolDN" layoutX="242.0" layoutY="4.0" onMouseClicked="#setMusicDN" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -143,7 +143,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="musicVolUP" layoutX="215.0" layoutY="4.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <Label fx:id="musicVolUP" layoutX="215.0" layoutY="4.0" onMouseClicked="#setMusicUP" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <font>
                   <Font size="20.0" />
                </font>
@@ -153,7 +153,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="effectVolDN" layoutX="185.0" layoutY="4.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label fx:id="effectVolDN" layoutX="185.0" layoutY="4.0" onMouseClicked="#setEffectDN" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
@@ -163,7 +163,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="effectVolUP" layoutX="299.0" layoutY="4.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label fx:id="effectVolUP" layoutX="299.0" layoutY="4.0" onMouseClicked="#setEffectUP" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
@@ -173,7 +173,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="sensitivityDN" layoutX="185.0" layoutY="46.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="sensitivityDN" layoutX="185.0" layoutY="46.0" onMouseClicked="#setSensitivityDN" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="20.0" />
                </font>
@@ -183,7 +183,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="sensitivityUP" layoutX="299.0" layoutY="46.0" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+            <Label fx:id="sensitivityUP" layoutX="299.0" layoutY="46.0" onMouseClicked="#setSensitivityUP" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                <font>
                   <Font size="20.0" />
                </font>

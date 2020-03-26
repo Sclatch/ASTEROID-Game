@@ -39,8 +39,7 @@ public class Music{
     }
 
     public void playLong(long time){
-        //replace with global variable
-        float toVolume = 8;
+        float toVolume = ConstantSettings.settingsValues[0];
         setVolume(0);
         play(time);
         new Thread(() -> {

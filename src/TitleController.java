@@ -136,8 +136,13 @@ public class TitleController {
         return transition;
     }
     @FXML
-    public void initialize(){
+    private void initialize(){
         goBack();
+
+        musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
+        effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
+        sensitivityLabel.setText(Integer.toString(ConstantSettings.settingsValues[2]));
+
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(25000), spaceBackground);
         translateTransition.setFromY(-800);
@@ -222,7 +227,7 @@ public class TitleController {
         });
     }
     @FXML
-    public void BGMLabelClick(){
+    private void BGMLabelClick(){
         isolateLabel(BGMLabel);
         titleVBox.setDisable(true);
         titleTranslate = menuTransitionEnter(-182);
@@ -244,7 +249,7 @@ public class TitleController {
         });
     }
     @FXML
-    public void BGMPreview1Click() {
+    private void BGMPreview1Click() {
         if(!playingPreview1) {
             //if main menu music is playing, save it's timestamp
             if(playingPreview2 || playingPreview3) {
@@ -265,7 +270,7 @@ public class TitleController {
         }
     }
     @FXML
-    public void BGMPreview2Click() {
+    private void BGMPreview2Click() {
         if(!playingPreview2) {
             //if main menu music is playing, save it's timestamp
             if(playingPreview1 || playingPreview3) {
@@ -285,7 +290,8 @@ public class TitleController {
             Main.music.stop();
         }
     }
-    public void BGMPreview3Click() {
+    @FXML
+    private void BGMPreview3Click() {
         if(!playingPreview3) {
             //if main menu music is playing, save it's timestamp
             if(playingPreview1 || playingPreview2) {
@@ -306,15 +312,15 @@ public class TitleController {
         }
     }
     @FXML
-    public void BGMSelect1Click() {
+    private void BGMSelect1Click() {
         Main.selectedMusic = "LostFuture";
     }
     @FXML
-    public void BGMSelect2Click() {
+    private void BGMSelect2Click() {
         Main.selectedMusic = "SpaceFlight";
     }
     @FXML
-    public void BGMSelect3Click() {
+    private void BGMSelect3Click() {
         Main.selectedMusic = "Stardust";
     }
     @FXML
@@ -325,7 +331,7 @@ public class TitleController {
         playingPreview3=false;
     }
     @FXML
-    public void settingsLabelClick(){
+    private void settingsLabelClick(){
         isolateLabel(settingsLabel);
         titleVBox.setDisable(true);
         titleTranslate = menuTransitionEnter(-235);
@@ -349,7 +355,51 @@ public class TitleController {
         });
     }
     @FXML
-    public void setScoreText(){
+    private void setMusicDN(){
+        if (ConstantSettings.settingsValues[0] > 0){
+            ConstantSettings.settingsValues[0]--;
+            Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
+            musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
+        }
+    }
+    @FXML
+    private void setMusicUP(){
+        if (ConstantSettings.settingsValues[0] < 10){
+            ConstantSettings.settingsValues[0]++;
+            Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
+            musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
+        }
+    }
+    @FXML
+    private void setEffectDN(){
+        if (ConstantSettings.settingsValues[1] > 0){
+            ConstantSettings.settingsValues[1]--;
+            effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
+        }
+    }
+    @FXML
+    private void setEffectUP(){
+        if (ConstantSettings.settingsValues[1] < 10){
+            ConstantSettings.settingsValues[1]++;
+            effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
+        }
+    }
+    @FXML
+    private void setSensitivityDN(){
+        if (ConstantSettings.settingsValues[2] > 1){
+            ConstantSettings.settingsValues[2]--;
+            sensitivityLabel.setText(Integer.toString(ConstantSettings.settingsValues[2]));
+        }
+    }
+    @FXML
+    private void setSensitivityUP(){
+        if (ConstantSettings.settingsValues[2] < 40){
+            ConstantSettings.settingsValues[2]++;
+            sensitivityLabel.setText(Integer.toString(ConstantSettings.settingsValues[2]));
+        }
+    }
+    @FXML
+    private void setScoreText(){
         ArrayList<Label> scoreList= new ArrayList<>(Arrays.asList(score1, score2, score3, score4, score5, score6, score7, score8));
         ArrayList<Label> playerList= new ArrayList<>(Arrays.asList(player1, player2, player3, player4, player5, player6, player7, player8));
         String csvFile = "src/misc/scores.csv";
@@ -396,7 +446,7 @@ public class TitleController {
         });
     }
     @FXML
-    public void quitLabelClick(){
+    private void quitLabelClick(){
         System.exit(0);
     }
 
