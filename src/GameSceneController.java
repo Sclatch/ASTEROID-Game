@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,6 +25,8 @@ public class GameSceneController {
     private String selectedMusic = Main.selectedMusic;
 
     private int score = 0;
+    private int life = 3;
+
     @FXML private Label scoreLabel;
     private boolean moveLeft = false, moveRight = false;
     private int moveSlow = 0;
@@ -49,6 +52,8 @@ public class GameSceneController {
                 }
             }
 
+            lifeMechanics();
+
             score += 1;
             scoreLabel.setText(Integer.toString(score));
         }
@@ -56,31 +61,92 @@ public class GameSceneController {
 
     @FXML private ImageView spaceship;
 
-    @FXML private ImageView gameBackground;
+    @FXML private ImageView starBackground, dustBackground, spaceBackground;
+
+    @FXML private ImageView hpBar1, hpBar2, hpBar3;
+
 
     @FXML
     public void initialize() {
         //game animations
         animationTimer.start();
 
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), gameBackground);
-        translateTransition.setFromY(-1600);
-        translateTransition.setToY(0);
-        translateTransition.setInterpolator(Interpolator.LINEAR);
+        //Background scrolling
+        parallaxBackground();
 
-        TranslateTransition translateTransition2 = new TranslateTransition(Duration.millis(0), gameBackground);
-        translateTransition2.setFromY(0);
-        translateTransition2.setToY(-1600);
-
-        ParallelTransition parallelTransition = new ParallelTransition(translateTransition, translateTransition2);
-        parallelTransition.setCycleCount(Animation.INDEFINITE);
-        parallelTransition.play();
         //music
         TitleController.resetMusic();
         Main.music.stop();
         Main.music.setSoundFile(selectedMusic);
         Main.music.openSoundFile();
         Main.music.play();
+    }
+
+    private void parallaxBackground(){
+        TranslateTransition translateTransitionStar = new TranslateTransition(Duration.millis(700), starBackground);
+        translateTransitionStar.setFromY(-1600);
+        translateTransitionStar.setToY(0);
+        translateTransitionStar.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition translateTransitionDust = new TranslateTransition(Duration.millis(8000), dustBackground);
+        translateTransitionDust.setFromY(0);
+        translateTransitionDust.setToY(-1600);
+        translateTransitionDust.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition translateTransitionSpace = new TranslateTransition(Duration.millis(20000), spaceBackground);
+        translateTransitionSpace.setFromY(-1600);
+        translateTransitionSpace.setToY(0);
+        translateTransitionSpace.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition translateTransitionStar2 = new TranslateTransition(Duration.millis(0), starBackground);
+        translateTransitionStar2.setFromY(0);
+        translateTransitionStar2.setToY(-1600);
+
+        TranslateTransition translateTransitionDust2 = new TranslateTransition(Duration.millis(0), dustBackground);
+        translateTransitionDust.setFromY(-1600);
+        translateTransitionDust.setToY(0);
+
+        TranslateTransition translateTransitionSpace2 = new TranslateTransition(Duration.millis(0), spaceBackground);
+        translateTransitionSpace2.setFromY(0);
+        translateTransitionSpace2.setToY(-1600);
+
+        ParallelTransition parallelTransitionStar = new ParallelTransition(translateTransitionStar, translateTransitionStar2);
+        parallelTransitionStar.setCycleCount(Animation.INDEFINITE);
+        parallelTransitionStar.play();
+
+        ParallelTransition parallelTransitionDust = new ParallelTransition(translateTransitionDust, translateTransitionDust2);
+        parallelTransitionDust.setCycleCount(Animation.INDEFINITE);
+        parallelTransitionDust.play();
+
+        ParallelTransition parallelTransitionSpace = new ParallelTransition(translateTransitionSpace, translateTransitionSpace2);
+        parallelTransitionSpace.setCycleCount(Animation.INDEFINITE);
+        parallelTransitionSpace.play();
+    }
+
+    private void lifeMechanics(){
+        if (life == 3){
+            hpBar1.setOpacity(100);
+            hpBar2.setOpacity(100);
+            hpBar3.setOpacity(100);
+        }
+
+        else if(life == 2){
+            hpBar1.setOpacity(100);
+            hpBar2.setOpacity(100);
+            hpBar3.setOpacity(0);
+        }
+
+        else if(life == 1){
+            hpBar1.setOpacity(100);
+            hpBar2.setOpacity(0);
+            hpBar3.setOpacity(0);
+        }
+
+        else if(life == 0){
+            hpBar1.setOpacity(0);
+            hpBar2.setOpacity(0);
+            hpBar3.setOpacity(0);
+        }
     }
 
     @FXML
@@ -100,6 +166,18 @@ public class GameSceneController {
             moveSlow = 1;
             keyEvent.consume();
         }
+
+        //THIS IS FOR DEBUGGING THE LIFE
+        if (keyEvent.getCode() == KeyCode.C){
+            life -= 1;
+            keyEvent.consume();
+        }
+
+        if (keyEvent.getCode() == KeyCode.V){
+            life += 1;
+            keyEvent.consume();
+        }
+        //-------------------------------
 
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             animationTimer.stop();
