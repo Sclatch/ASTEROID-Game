@@ -23,6 +23,17 @@ public class ConstantSettings {
             e.printStackTrace();
             settingsValues = new int[]{5, 5, 15};
         }
+        finally {
+            if (BGMSelection == 0){
+                Main.selectedMusic = "LostFuture";
+            }
+            else if (BGMSelection == 1){
+                Main.selectedMusic = "SpaceFlight";
+            }
+            else{
+                Main.selectedMusic = "Stardust";
+            }
+        }
     }
 
     public static void writeSettingToFile(){

@@ -49,6 +49,7 @@ public class TitleController {
     private Label musicVolUP, musicVolDN, effectVolUP, effectVolDN, sensitivityUP, sensitivityDN, musicVolLabel, effectVolLabel, sensitivityLabel;
     @FXML
     private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
+    //Leaderboard Elements
     @FXML
     private Label score1,score2,score3,score4,score5,score6,score7,score8;
     @FXML
@@ -65,52 +66,15 @@ public class TitleController {
     }
     @FXML
     private void reset(){
-        backLabel.setOpacity(0);
         backLabel.setDisable(true);
         BGMGridPane.setDisable(true);
+        ScoreGridPane.setDisable(true);
         settingsGridPane.setDisable(true);
 
-        BGMTitle1.setOpacity(0);
-        BGMTitle2.setOpacity(0);
-        BGMTitle3.setOpacity(0);
-        BGMPreview1.setOpacity(0);
-        BGMPreview2.setOpacity(0);
-        BGMPreview3.setOpacity(0);
-        BGMSelect1.setOpacity(0);
-        BGMSelect2.setOpacity(0);
-        BGMSelect3.setOpacity(0);
-        musicVolDN.setOpacity(0);
-        musicVolLabel.setOpacity(0);
-        musicVolUP.setOpacity(0);
-        effectVolDN.setOpacity(0);
-        effectVolLabel.setOpacity(0);
-        effectVolUP.setOpacity(0);
-        sensitivityDN.setOpacity(0);
-        sensitivityLabel.setOpacity(0);
-        sensitivityUP.setOpacity(0);
-        settingsMusicLabel.setOpacity(0);
-        settingsEffectLabel.setOpacity(0);
-        settingsSensitivityLabel.setOpacity(0);
-
+        backLabel.setOpacity(0);
+        BGMGridPane.setOpacity(0);
+        settingsGridPane.setOpacity(0);
         ScoreGridPane.setOpacity(0);
-        ScoreGridPane.setDisable(true);
-        score1.setOpacity(0);
-        score2.setOpacity(0);
-        score3.setOpacity(0);
-        score4.setOpacity(0);
-        score5.setOpacity(0);
-        score6.setOpacity(0);
-        score7.setOpacity(0);
-        score8.setOpacity(0);
-
-        player1.setOpacity(0);
-        player2.setOpacity(0);
-        player3.setOpacity(0);
-        player4.setOpacity(0);
-        player5.setOpacity(0);
-        player6.setOpacity(0);
-        player7.setOpacity(0);
-        player8.setOpacity(0);
     }
     @FXML
     private void goBack(){
@@ -164,7 +128,6 @@ public class TitleController {
             Main.music.openSoundFile();
             Main.music.play();
         }
-
     }
     @FXML
     private void labelEnter(MouseEvent event) {
@@ -203,23 +166,6 @@ public class TitleController {
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
-            score1.setOpacity(1);
-            score2.setOpacity(1);
-            score3.setOpacity(1);
-            score4.setOpacity(1);
-            score5.setOpacity(1);
-            score6.setOpacity(1);
-            score7.setOpacity(1);
-            score8.setOpacity(1);
-
-            player1.setOpacity(1);
-            player2.setOpacity(1);
-            player3.setOpacity(1);
-            player4.setOpacity(1);
-            player5.setOpacity(1);
-            player6.setOpacity(1);
-            player7.setOpacity(1);
-            player8.setOpacity(1);
             ScoreGridPane.setOpacity(1);
             ScoreGridPane.setDisable(false);
 
@@ -236,15 +182,7 @@ public class TitleController {
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
-            BGMTitle1.setOpacity(1);
-            BGMTitle2.setOpacity(1);
-            BGMTitle3.setOpacity(1);
-            BGMPreview1.setOpacity(1);
-            BGMPreview2.setOpacity(1);
-            BGMPreview3.setOpacity(1);
-            BGMSelect1.setOpacity(1);
-            BGMSelect2.setOpacity(1);
-            BGMSelect3.setOpacity(1);
+            BGMGridPane.setOpacity(1);
             BGMGridPane.setDisable(false);
         });
     }
@@ -314,14 +252,20 @@ public class TitleController {
     @FXML
     private void BGMSelect1Click() {
         Main.selectedMusic = "LostFuture";
+        ConstantSettings.BGMSelection = 0;
+        backLabelClick();
     }
     @FXML
     private void BGMSelect2Click() {
         Main.selectedMusic = "SpaceFlight";
+        ConstantSettings.BGMSelection = 1;
+        backLabelClick();
     }
     @FXML
     private void BGMSelect3Click() {
         Main.selectedMusic = "Stardust";
+        ConstantSettings.BGMSelection = 2;
+        backLabelClick();
     }
     @FXML
     public static void resetMusic() {
@@ -340,18 +284,7 @@ public class TitleController {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
             settingsGridPane.setDisable(false);
-            musicVolDN.setOpacity(1);
-            musicVolLabel.setOpacity(1);
-            musicVolUP.setOpacity(1);
-            effectVolDN.setOpacity(1);
-            effectVolLabel.setOpacity(1);
-            effectVolUP.setOpacity(1);
-            sensitivityDN.setOpacity(1);
-            sensitivityLabel.setOpacity(1);
-            sensitivityUP.setOpacity(1);
-            settingsMusicLabel.setOpacity(1);
-            settingsEffectLabel.setOpacity(1);
-            settingsSensitivityLabel.setOpacity(1);
+            settingsGridPane.setOpacity(1);
         });
     }
     //for changing setting parameters------------------------------------------
@@ -427,12 +360,12 @@ public class TitleController {
         if (settingsLabel.getOpacity() == 1 || BGMLabel.getOpacity() == 1){
             ConstantSettings.writeSettingToFile();
         }
-        //set all submenu opacity to 0
-        reset();
         //stop music from BGM page
-        if(playingPreview1 || playingPreview2 || playingPreview3) {
+        if(BGMLabel.getOpacity() == 1) {
             Main.music.stop();
         }
+        //set all submenu opacity to 0
+        reset();
         //for returning from BGM page
         if (!Main.music.isPlaying()) {
             Main.music.setSoundFile("menuMusic");
