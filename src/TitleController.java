@@ -12,7 +12,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TitleController {
 
@@ -25,6 +30,8 @@ public class TitleController {
 
     @FXML
     private VBox titleVBox;
+    @FXML
+    private GridPane ScoreGridPane;
     @FXML
     private GridPane BGMGridPane, settingsGridPane;
     @FXML
@@ -43,6 +50,10 @@ public class TitleController {
     private Label musicVolUP, musicVolDN, effectVolUP, effectVolDN, sensitivityUP, sensitivityDN, musicVolLabel, effectVolLabel, sensitivityLabel;
     @FXML
     private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
+    @FXML
+    private Label score1,score2,score3,score4,score5,score6,score7,score8,score9,score10;
+    @FXML
+    private Label player1,player2,player3,player4,player5,player6,player7,player8,player9,player10;
 
     @FXML
     private void isolateLabel(Label label){
@@ -81,6 +92,30 @@ public class TitleController {
         settingsMusicLabel.setOpacity(0);
         settingsEffectLabel.setOpacity(0);
         settingsSensitivityLabel.setOpacity(0);
+
+        ScoreGridPane.setOpacity(0);
+        ScoreGridPane.setDisable(true);
+        score1.setOpacity(0);
+        score2.setOpacity(0);
+        score3.setOpacity(0);
+        score4.setOpacity(0);
+        score5.setOpacity(0);
+        score6.setOpacity(0);
+        score7.setOpacity(0);
+        score8.setOpacity(0);
+        score9.setOpacity(0);
+        score10.setOpacity(0);
+
+        player1.setOpacity(0);
+        player2.setOpacity(0);
+        player3.setOpacity(0);
+        player4.setOpacity(0);
+        player5.setOpacity(0);
+        player6.setOpacity(0);
+        player7.setOpacity(0);
+        player8.setOpacity(0);
+        player9.setOpacity(0);
+        player10.setOpacity(0);
     }
     @FXML
     private void goBack(){
@@ -168,6 +203,31 @@ public class TitleController {
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
+            score1.setOpacity(1);
+            score2.setOpacity(1);
+            score3.setOpacity(1);
+            score4.setOpacity(1);
+            score5.setOpacity(1);
+            score6.setOpacity(1);
+            score7.setOpacity(1);
+            score8.setOpacity(1);
+            score9.setOpacity(1);
+            score10.setOpacity(1);
+
+            player1.setOpacity(1);
+            player2.setOpacity(1);
+            player3.setOpacity(1);
+            player4.setOpacity(1);
+            player5.setOpacity(1);
+            player6.setOpacity(1);
+            player7.setOpacity(1);
+            player8.setOpacity(1);
+            player9.setOpacity(1);
+            player10.setOpacity(1);
+            ScoreGridPane.setOpacity(1);
+            ScoreGridPane.setDisable(false);
+
+            setScoreText();
         });
     }
     @FXML
@@ -296,6 +356,36 @@ public class TitleController {
             settingsEffectLabel.setOpacity(1);
             settingsSensitivityLabel.setOpacity(1);
         });
+    }
+    @FXML
+    public void setScoreText(){
+        ArrayList<Label> scoreList= new ArrayList<Label>(Arrays.asList(score1,score2,score3,score4,score5,score6,score7,score8,score9,score10));
+        ArrayList<Label> playerList= new ArrayList<Label>(Arrays.asList(player1,player2,player3,player4,player5,player6,player7,player8,player9,player10));
+        String csvFile = "src/misc/scores.csv";
+
+        String line = "";
+
+        int i = 0;
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] csvVal = line.split(",");
+
+
+                scoreList.get(i).setText(csvVal[1]);
+                playerList.get(i).setText(csvVal[0]);
+
+                i++;
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void backLabelClick(){
