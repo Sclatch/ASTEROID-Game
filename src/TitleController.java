@@ -23,14 +23,10 @@ public class TitleController {
     private static boolean playingPreview3 = false;
     private static long menuThemeTime;
 
-
-
-    @FXML
-    private Scene titleScene;
     @FXML
     private VBox titleVBox;
     @FXML
-    private GridPane BGMGridPane;
+    private GridPane BGMGridPane, settingsGridPane;
     @FXML
     private ImageView spaceBackground;
     //Main menu elements
@@ -44,7 +40,10 @@ public class TitleController {
     private Label BGMTitle1, BGMTitle2, BGMTitle3, BGMPreview1, BGMPreview2, BGMPreview3, BGMSelect1, BGMSelect2, BGMSelect3;
     //Settings menu elements
     @FXML
-    private Label settingsTitle1, settingsTitle2, settingsTitle3;
+    private Label musicVolUP, musicVolDN, effectVolUP, effectVolDN, sensitivityUP, sensitivityDN, musicVolLabel, effectVolLabel, sensitivityLabel;
+    @FXML
+    private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
+
     @FXML
     private void isolateLabel(Label label){
         startLabel.setOpacity(0);
@@ -59,6 +58,8 @@ public class TitleController {
         backLabel.setOpacity(0);
         backLabel.setDisable(true);
         BGMGridPane.setDisable(true);
+        settingsGridPane.setDisable(true);
+
         BGMTitle1.setOpacity(0);
         BGMTitle2.setOpacity(0);
         BGMTitle3.setOpacity(0);
@@ -68,9 +69,18 @@ public class TitleController {
         BGMSelect1.setOpacity(0);
         BGMSelect2.setOpacity(0);
         BGMSelect3.setOpacity(0);
-        //        settingsTitle1.setOpacity(0);
-//        settingsTitle2.setOpacity(0);
-//        settingsTitle3.setOpacity(0);
+        musicVolDN.setOpacity(0);
+        musicVolLabel.setOpacity(0);
+        musicVolUP.setOpacity(0);
+        effectVolDN.setOpacity(0);
+        effectVolLabel.setOpacity(0);
+        effectVolUP.setOpacity(0);
+        sensitivityDN.setOpacity(0);
+        sensitivityLabel.setOpacity(0);
+        sensitivityUP.setOpacity(0);
+        settingsMusicLabel.setOpacity(0);
+        settingsEffectLabel.setOpacity(0);
+        settingsSensitivityLabel.setOpacity(0);
     }
     @FXML
     private void goBack(){
@@ -113,12 +123,13 @@ public class TitleController {
         parallelTransition.play();
 
         //start playing music for main menu
-        if(Main.firstStartup==false) {
+        if(!Main.firstStartup) {
             Main.music.stop();
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play();
         }
-        Main.music.setSoundFile("menuMusic");
-        Main.music.openSoundFile();
-        Main.music.play();
+
     }
     @FXML
     private void labelEnter(MouseEvent event) {
@@ -197,7 +208,7 @@ public class TitleController {
             Main.music.play();
 
         }
-        else if(playingPreview1) {
+        else {
             playingPreview1=false;
             Main.music.stop();
         }
@@ -218,7 +229,7 @@ public class TitleController {
             Main.music.play();
 
         }
-        else if(playingPreview2) {
+        else {
             playingPreview2=false;
             Main.music.stop();
         }
@@ -238,7 +249,7 @@ public class TitleController {
             Main.music.play();
 
         }
-        else if(playingPreview3) {
+        else {
             playingPreview3=false;
             Main.music.stop();
         }
@@ -271,9 +282,19 @@ public class TitleController {
         titleTranslate.setOnFinished(actionEvent -> {
             backLabel.setOpacity(1);
             backLabel.setDisable(false);
-//        settingsTitle1.setOpacity(1);
-//        settingsTitle2.setOpacity(1);
-//        settingsTitle3.setOpacity(1);
+            settingsGridPane.setDisable(false);
+            musicVolDN.setOpacity(1);
+            musicVolLabel.setOpacity(1);
+            musicVolUP.setOpacity(1);
+            effectVolDN.setOpacity(1);
+            effectVolLabel.setOpacity(1);
+            effectVolUP.setOpacity(1);
+            sensitivityDN.setOpacity(1);
+            sensitivityLabel.setOpacity(1);
+            sensitivityUP.setOpacity(1);
+            settingsMusicLabel.setOpacity(1);
+            settingsEffectLabel.setOpacity(1);
+            settingsSensitivityLabel.setOpacity(1);
         });
     }
     @FXML
@@ -282,9 +303,11 @@ public class TitleController {
         if(playingPreview1 || playingPreview2 || playingPreview3) {
             Main.music.stop();
         }
-        Main.music.setSoundFile("menuMusic");
-        Main.music.openSoundFile();
-        Main.music.play(menuThemeTime);
+        if (!Main.music.isPlaying()) {
+            Main.music.setSoundFile("menuMusic");
+            Main.music.openSoundFile();
+            Main.music.play(menuThemeTime);
+        }
 
         titleTranslate = menuTransitionExit();
         titleTranslate.play();

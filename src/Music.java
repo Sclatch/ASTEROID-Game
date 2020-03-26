@@ -21,15 +21,13 @@ public class Music{
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         }
-        catch (UnsupportedAudioFileException e) {
+        catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
+    }
+
+    public boolean isPlaying(){
+        return clip.isRunning();
     }
 
     public void play() {

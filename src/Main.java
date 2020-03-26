@@ -27,6 +27,9 @@ public class Main extends Application {
         SequentialTransition intro = new Intro().play(stage);
         stage.show();
         intro.play();
+        Main.music.setSoundFile("menuMusic");
+        Main.music.openSoundFile();
+        Main.music.play(58500000);
 
         //when intro animation is finished, load in main menu
         intro.setOnFinished(actionEvent -> {
