@@ -54,7 +54,7 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="42.0" layoutY="748.0" text="Version a0.1" textFill="WHITE" />
+      <Label layoutX="42.0" layoutY="748.0" text="Version a0.9" textFill="WHITE" />
       <ImageView layoutX="160.0" layoutY="151.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="509.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="151.0">
          <image>
             <Image url="@Misc/logo.png" />
@@ -282,4 +282,3 @@
    </rotationAxis>
 
 </AnchorPane>
-

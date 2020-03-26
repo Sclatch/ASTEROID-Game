@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +31,9 @@ public class GameSceneController {
     private int moveSlow = 0;
 
     @FXML private ImageView spaceship;
+    private Image ship = new Image("Textures/Ship.png");
+    private Image shipR = new Image("Textures/ShipR.png");
+    private Image shipL = new Image("Textures/ShipL.png");
     @FXML private Label scoreLabel;
     @FXML private ImageView starBackground, dustBackground, spaceBackground;
     @FXML private ImageView hpBar1, hpBar2, hpBar3;
@@ -58,6 +62,7 @@ public class GameSceneController {
                 else if(spaceship.getTranslateX() == -640){
                     spaceship.setTranslateX(spaceship.getTranslateX() - 5);
                 }
+                spaceship.setImage(shipL);
             }
             if (moveRight && !moveLeft){
                 if(spaceship.getTranslateX() < 580) {
@@ -66,6 +71,10 @@ public class GameSceneController {
                 else if (spaceship.getTranslateX() == 580){
                     spaceship.setTranslateX(spaceship.getTranslateX() + 5);
                 }
+                spaceship.setImage(shipR);
+            }
+            if ((moveRight && moveLeft) || (!moveRight && !moveLeft)) {
+                spaceship.setImage(ship);
             }
 
             //gun power meter
@@ -112,6 +121,7 @@ public class GameSceneController {
         asteroids[5]=asteroid6;
         asteroids[6]=asteroid7;
         asteroids[7]=asteroid8;
+        spaceship.setImage(ship);
         for(ImageView i: asteroids) {
             i.setLayoutY(Math.random()*(-1200)-100);
             i.setLayoutX(590);
