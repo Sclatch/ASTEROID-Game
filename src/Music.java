@@ -1,15 +1,22 @@
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 
 
 public class Music{
     private File soundFile = null;
     private Clip clip = null;
+    private FloatControl gainControl = null;
+
+    public float getVolume() {
+        return (float) Math.pow(10f, gainControl.getValue() / 20f);
+    }
+
+    public void setVolume(float volume) {
+        if (volume < 0f || volume > 1f)
+            throw new IllegalArgumentException("Volume not valid: " + volume);
+        gainControl.setValue(20f * (float) Math.log10(volume));
+    }
 
     public void setSoundFile(String filename) {
         soundFile = new File("src/Misc/Music/" + filename + ".wav");
@@ -20,6 +27,7 @@ public class Music{
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             clip = AudioSystem.getClip();
             clip.open(audioIn);
+            gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         }
         catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
@@ -30,6 +38,25 @@ public class Music{
         return clip.isRunning();
     }
 
+    public void playLong(long time){
+        //replace with global variable
+        float toVolume = 8;
+        setVolume(0);
+        play(time);
+        new Thread(() -> {
+            float volume = 0;
+            while(volume < toVolume){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                volume += 0.01;
+                setVolume(volume/10);
+            }
+        }).start();
+    }
+
     public void play() {
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -37,8 +64,7 @@ public class Music{
 
     public void play(long time) {
         clip.setMicrosecondPosition(time);
-        clip.start();
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        play();
 
     }
 
@@ -52,8 +78,7 @@ public class Music{
     public long pause() {
         if(clip.isActive()) {
             long t = clip.getMicrosecondPosition();
-            clip.stop();
-            clip.close();
+            stop();
             return t;
         }
         return 0;

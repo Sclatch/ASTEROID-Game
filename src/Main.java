@@ -29,7 +29,7 @@ public class Main extends Application {
         intro.play();
         Main.music.setSoundFile("menuMusic");
         Main.music.openSoundFile();
-        Main.music.play(58500000);
+        Main.music.playLong(59000000);
 
         //when intro animation is finished, load in main menu
         intro.setOnFinished(actionEvent -> {

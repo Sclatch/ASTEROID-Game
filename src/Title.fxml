@@ -190,10 +190,10 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane fx:id="ScoreGridPane" disable="true" layoutX="560.0" layoutY="331.0" prefHeight="396.0" prefWidth="161.0">
+      <GridPane fx:id="ScoreGridPane" disable="true" layoutX="440.0" layoutY="350.0" prefHeight="396.0" prefWidth="400.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -208,26 +208,70 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="player1" prefHeight="18.0" prefWidth="74.0" text="test" textFill="WHITE" />
-            <Label fx:id="score1" prefHeight="18.0" prefWidth="74.0" text="score1" textFill="WHITE" GridPane.columnIndex="1" />
-            <Label fx:id="player2" prefHeight="18.0" prefWidth="74.0" text="Player2" textFill="WHITE" GridPane.rowIndex="1" />
-            <Label fx:id="score2" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="player3" text="Label" textFill="WHITE" GridPane.rowIndex="2" />
-            <Label fx:id="score3" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="player4" text="Label" textFill="WHITE" GridPane.rowIndex="3" />
-            <Label fx:id="score4" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="player5" text="Label" textFill="WHITE" GridPane.rowIndex="4" />
-            <Label fx:id="score5" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="player6" text="Label" textFill="WHITE" GridPane.rowIndex="5" />
-            <Label fx:id="score6" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="player7" text="Label" textFill="WHITE" GridPane.rowIndex="6" />
-            <Label fx:id="score7" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="player8" text="Label" textFill="WHITE" GridPane.rowIndex="7" />
-            <Label fx:id="score8" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label fx:id="player9" text="Label" textFill="WHITE" GridPane.rowIndex="8" />
-            <Label fx:id="score9" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label fx:id="player10" text="Label" textFill="WHITE" GridPane.rowIndex="9" />
-            <Label fx:id="score10" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label fx:id="player1" prefHeight="18.0" prefWidth="74.0" text="test" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score1" text="Label" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player2" prefHeight="18.0" prefWidth="74.0" text="Player2" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score2" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player3" text="Label" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score3" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player4" text="Label" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score4" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player5" text="Label" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score5" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player6" text="Label" textFill="WHITE" GridPane.rowIndex="5">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score6" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player7" text="Label" textFill="WHITE" GridPane.rowIndex="6">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score7" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="player8" text="Label" textFill="WHITE" GridPane.rowIndex="7">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="score8" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
 
          </children>
       </GridPane>

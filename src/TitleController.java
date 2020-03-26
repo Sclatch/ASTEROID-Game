@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ public class TitleController {
     @FXML
     private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
     @FXML
-    private Label score1,score2,score3,score4,score5,score6,score7,score8,score9,score10;
+    private Label score1,score2,score3,score4,score5,score6,score7,score8;
     @FXML
-    private Label player1,player2,player3,player4,player5,player6,player7,player8,player9,player10;
+    private Label player1,player2,player3,player4,player5,player6,player7,player8;
 
     @FXML
     private void isolateLabel(Label label){
@@ -103,8 +102,6 @@ public class TitleController {
         score6.setOpacity(0);
         score7.setOpacity(0);
         score8.setOpacity(0);
-        score9.setOpacity(0);
-        score10.setOpacity(0);
 
         player1.setOpacity(0);
         player2.setOpacity(0);
@@ -114,8 +111,6 @@ public class TitleController {
         player6.setOpacity(0);
         player7.setOpacity(0);
         player8.setOpacity(0);
-        player9.setOpacity(0);
-        player10.setOpacity(0);
     }
     @FXML
     private void goBack(){
@@ -211,8 +206,6 @@ public class TitleController {
             score6.setOpacity(1);
             score7.setOpacity(1);
             score8.setOpacity(1);
-            score9.setOpacity(1);
-            score10.setOpacity(1);
 
             player1.setOpacity(1);
             player2.setOpacity(1);
@@ -222,8 +215,6 @@ public class TitleController {
             player6.setOpacity(1);
             player7.setOpacity(1);
             player8.setOpacity(1);
-            player9.setOpacity(1);
-            player10.setOpacity(1);
             ScoreGridPane.setOpacity(1);
             ScoreGridPane.setDisable(false);
 
@@ -359,11 +350,11 @@ public class TitleController {
     }
     @FXML
     public void setScoreText(){
-        ArrayList<Label> scoreList= new ArrayList<Label>(Arrays.asList(score1,score2,score3,score4,score5,score6,score7,score8,score9,score10));
-        ArrayList<Label> playerList= new ArrayList<Label>(Arrays.asList(player1,player2,player3,player4,player5,player6,player7,player8,player9,player10));
+        ArrayList<Label> scoreList= new ArrayList<>(Arrays.asList(score1, score2, score3, score4, score5, score6, score7, score8));
+        ArrayList<Label> playerList= new ArrayList<>(Arrays.asList(player1, player2, player3, player4, player5, player6, player7, player8));
         String csvFile = "src/misc/scores.csv";
 
-        String line = "";
+        String line;
 
         int i = 0;
         try {
@@ -381,8 +372,6 @@ public class TitleController {
                 i++;
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
