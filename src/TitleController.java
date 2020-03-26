@@ -354,50 +354,46 @@ public class TitleController {
             settingsSensitivityLabel.setOpacity(1);
         });
     }
+    //for changing setting parameters------------------------------------------
     @FXML
     private void setMusicDN(){
-        if (ConstantSettings.settingsValues[0] > 0){
-            ConstantSettings.settingsValues[0]--;
-            Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
-            musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
-        }
+        settingsDN(0, 0, musicVolLabel);
+        Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
     }
     @FXML
     private void setMusicUP(){
-        if (ConstantSettings.settingsValues[0] < 10){
-            ConstantSettings.settingsValues[0]++;
-            Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
-            musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
-        }
+        settingsUP(0, 10, musicVolLabel);
+        Main.music.setVolume((float) ConstantSettings.settingsValues[0]/10);
     }
     @FXML
     private void setEffectDN(){
-        if (ConstantSettings.settingsValues[1] > 0){
-            ConstantSettings.settingsValues[1]--;
-            effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
-        }
+        settingsDN(1, 0, effectVolLabel);
     }
     @FXML
     private void setEffectUP(){
-        if (ConstantSettings.settingsValues[1] < 10){
-            ConstantSettings.settingsValues[1]++;
-            effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
-        }
+        settingsUP(1, 10, effectVolLabel);
     }
     @FXML
     private void setSensitivityDN(){
-        if (ConstantSettings.settingsValues[2] > 1){
-            ConstantSettings.settingsValues[2]--;
-            sensitivityLabel.setText(Integer.toString(ConstantSettings.settingsValues[2]));
-        }
+        settingsDN(2, 1, sensitivityLabel);
     }
     @FXML
     private void setSensitivityUP(){
-        if (ConstantSettings.settingsValues[2] < 40){
-            ConstantSettings.settingsValues[2]++;
-            sensitivityLabel.setText(Integer.toString(ConstantSettings.settingsValues[2]));
+        settingsUP(2, 40, sensitivityLabel);
+    }
+    private void settingsDN(int settingsItem, int limit, Label label){
+        if (ConstantSettings.settingsValues[settingsItem] > limit){
+            ConstantSettings.settingsValues[settingsItem]--;
+            label.setText(Integer.toString(ConstantSettings.settingsValues[settingsItem]));
         }
     }
+    private void settingsUP(int settingsItem, int limit, Label label){
+        if (ConstantSettings.settingsValues[settingsItem] < limit){
+            ConstantSettings.settingsValues[settingsItem]++;
+            label.setText(Integer.toString(ConstantSettings.settingsValues[settingsItem]));
+        }
+    }
+    //--------------------------------------------------------------------------------------
     @FXML
     private void setScoreText(){
         ArrayList<Label> scoreList= new ArrayList<>(Arrays.asList(score1, score2, score3, score4, score5, score6, score7, score8));
@@ -415,7 +411,6 @@ public class TitleController {
                 // use comma as separator
                 String[] csvVal = line.split(",");
 
-
                 scoreList.get(i).setText(csvVal[1]);
                 playerList.get(i).setText(csvVal[0]);
 
@@ -428,15 +423,23 @@ public class TitleController {
     }
     @FXML
     private void backLabelClick(){
+        //If exiting settings menu/BGM menu, write changes to file
+        if (settingsLabel.getOpacity() == 1 || BGMLabel.getOpacity() == 1){
+            ConstantSettings.writeSettingToFile();
+        }
+        //set all submenu opacity to 0
         reset();
+        //stop music from BGM page
         if(playingPreview1 || playingPreview2 || playingPreview3) {
             Main.music.stop();
         }
+        //for returning from BGM page
         if (!Main.music.isPlaying()) {
             Main.music.setSoundFile("menuMusic");
             Main.music.openSoundFile();
             Main.music.play(menuThemeTime);
         }
+        //Animation for putting labels back to place
         titleTranslate = menuTransitionExit();
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {
