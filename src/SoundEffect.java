@@ -25,6 +25,7 @@ public class SoundEffect {
             clip = AudioSystem.getClip();
             clip.open(audioIn);
             gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            setVolume((float) ConstantSettings.settingsValues[1]/10);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }

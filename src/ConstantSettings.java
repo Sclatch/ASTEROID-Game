@@ -48,8 +48,4 @@ public class ConstantSettings {
             e.printStackTrace();
         }
     }
-
-    public void writeBGMToFile(int BGM){
-
-    }
 }
