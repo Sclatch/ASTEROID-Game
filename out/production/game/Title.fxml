@@ -108,6 +108,7 @@
             <Label fx:id="BGMSelect2" onMouseClicked="#BGMSelect2Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;SELECT&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="BGMSelect3" onMouseClicked="#BGMSelect3Click" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="&gt;SELECT&lt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
+
       </GridPane>
       <Label fx:id="backLabel" onMouseClicked="#backLabelClick" onMouseEntered="#labelEnter" onMouseExited="#labelExit" text="BACK&lt;" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="700.0">
          <font>
@@ -279,4 +280,6 @@
    <rotationAxis>
       <Point3D />
    </rotationAxis>
+
 </AnchorPane>
+

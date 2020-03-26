@@ -65,12 +65,16 @@
                <Image url="@Textures/asteroids1.png" />
             </image>
          </ImageView>
+<<<<<<< HEAD
          <ImageView fx:id="laserBeam1" fitHeight="800.0" fitWidth="20.0" layoutX="655.0" layoutY="-75.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Textures/beam.png" />
             </image>
          </ImageView>
          <ImageView fx:id="laserBeam2" fitHeight="800.0" fitWidth="20.0" layoutX="655.0" layoutY="-75.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+=======
+         <ImageView fx:id="laserBeam" fitHeight="800.0" fitWidth="20.0" layoutX="655.0" layoutY="-75.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+>>>>>>> temp2
             <image>
                <Image url="@Textures/beam.png" />
             </image>

@@ -40,8 +40,8 @@ public class Music{
 
     public void playLong(long time){
         float toVolume = ConstantSettings.settingsValues[0];
-        setVolume(0);
         play(time);
+        setVolume(0);
         new Thread(() -> {
             float volume = 0;
             while(volume < toVolume){
@@ -57,6 +57,7 @@ public class Music{
     }
 
     public void play() {
+        setVolume((float) ConstantSettings.settingsValues[0]/10);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
