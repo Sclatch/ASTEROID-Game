@@ -16,11 +16,23 @@ import java.io.IOException;
 public class GameSceneController {
 
     private int sensitivity = ConstantSettings.settingsValues[2];
+	
+	@FXML private ImageView asteroid1;
+    @FXML private ImageView asteroid2;
+    @FXML private ImageView asteroid3;
+    @FXML private ImageView asteroid4;
+    @FXML private ImageView asteroid5;
+    @FXML private ImageView asteroid6;
+    @FXML private ImageView asteroid7;
+    @FXML private ImageView asteroid8;
+    private ImageView[] asteroids = new ImageView[8];
 
     private String selectedMusic = Main.selectedMusic;
 
     private int score = 0;
     private int life = 3;
+
+    private int asteroidSpeed=2;
 
     @FXML private Label scoreLabel;
     private boolean moveLeft = false, moveRight = false;
@@ -46,6 +58,64 @@ public class GameSceneController {
                     spaceship.setTranslateX(spaceship.getTranslateX() + 5);
                 }
             }
+			
+			//asteroid movement, asteroid collision detection
+            for(int i=0; i<8; i++) {
+                ImageView asteroid=asteroids[i];
+                //lopsided asteroid collision
+                if(i==0 || i==4) {
+                    if (asteroid.getLayoutY() >= 850
+                            //left edge of of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 110
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 15
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() - 28)
+                            //right edge of of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() + 28
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
+                            //closer to center of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 135
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 28
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 28)) {
+                        life--;
+                        asteroid.setLayoutY(Math.random() * (-900) - 100);
+                        asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                    }
+                    else {
+                        asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                    }
+                }
+                //regular-shaped (rounder) asteroid collision
+                else {
+                    if (asteroid.getLayoutY() >= 850
+                            //left edge of of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() - 40)
+                            //right edge of of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() + 40
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
+                            //closer to center of asteroid
+                            || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
+                            && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
+                            && asteroid.getTranslateX() >= spaceship.getTranslateX() - 40
+                            && asteroid.getTranslateX() <= spaceship.getTranslateX() + 40)) {
+                        life--;
+                        asteroid.setLayoutY(Math.random() * (-900) - 100);
+                        asteroid.setTranslateX(Math.random() * (585 + 645 - 1) - 645);
+                    }
+                    else {
+                        asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                    }
+                }
+            }// end for loop
+
 
             lifeMechanics();
 
@@ -63,6 +133,20 @@ public class GameSceneController {
 
     @FXML
     public void initialize() {
+		
+		asteroids[0]=asteroid1;
+        asteroids[1]=asteroid2;
+        asteroids[2]=asteroid3;
+        asteroids[3]=asteroid4;
+        asteroids[4]=asteroid5;
+        asteroids[5]=asteroid6;
+        asteroids[6]=asteroid7;
+        asteroids[7]=asteroid8;
+        for(ImageView i: asteroids) {
+            i.setLayoutY(Math.random()*(-900)-100);
+            i.setLayoutX(590);
+            i.setTranslateX(Math.random()*(585+645-1)-645);
+        }
         //game animations
         animationTimer.start();
 

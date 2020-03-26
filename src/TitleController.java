@@ -437,7 +437,6 @@ public class TitleController {
             Main.music.openSoundFile();
             Main.music.play(menuThemeTime);
         }
-
         titleTranslate = menuTransitionExit();
         titleTranslate.play();
         titleTranslate.setOnFinished(actionEvent -> {
