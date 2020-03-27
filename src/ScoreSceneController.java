@@ -14,9 +14,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class ScoreSceneController {
-
-    public static int score;
-
     @FXML
     private ImageView background;
     @FXML

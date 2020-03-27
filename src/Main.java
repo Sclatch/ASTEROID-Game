@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// ASTEROIDS GAME CREATED BY: JKMN
+// 27/MAR/2019 FINALIZED
+
 public class Main extends Application {
     public static int score = -1;
     public static String username = "Anonymous";
@@ -54,8 +57,6 @@ public class Main extends Application {
             fadeTransition.play();
             firstStartup=false;
         });
-
-
     }
 
     public static LeaderBoardClient getClient() {

@@ -11,8 +11,9 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.Scanner;
 
-
+// server side of the SocketIO-based leaderboard system, waits for an open LeaderBoardClient on the same port
 public class LeaderBoardServer extends Application {
+
     private TextArea ta = new TextArea();
     static int[] scores = new int[8];
     static int score = 0;
@@ -32,6 +33,8 @@ public class LeaderBoardServer extends Application {
     }
 
     private void save() {
+        Platform.runLater(() -> ta.appendText("Saving data into leaderboard.csv at " +
+                new Date() + '\n'));
         try {
             //get text data from f if it is valid
             PrintWriter output = new PrintWriter(new File("src/leaderboard.csv"));
@@ -49,6 +52,8 @@ public class LeaderBoardServer extends Application {
     }
 
     private void load() {
+        Platform.runLater(() -> ta.appendText("Loading data from leaderboard.csv at " +
+                new Date() + '\n'));
         try {
             //get text data from f if it is valid
             Scanner input = new Scanner(new File("src/leaderboard.csv"));
@@ -85,7 +90,8 @@ public class LeaderBoardServer extends Application {
 
             //Continuously server the client
             while (true) {
-
+                Platform.runLater(() -> ta.appendText("Beginning sync with client side at  " +
+                        new Date() + '\n'));
                 load();
                 PrintWriter writer = new PrintWriter(osToClient, true);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(isFromClient));
@@ -93,9 +99,7 @@ public class LeaderBoardServer extends Application {
                     writer.println(scores[i]);
                     writer.println(names[i]);
                 }
-
                 save();
-
                 score = Integer.parseInt(reader.readLine());
                 name = reader.readLine();
 
@@ -111,12 +115,8 @@ public class LeaderBoardServer extends Application {
                     }
                 }
                 save();
-
-                load();
-
-                Platform.runLater( () -> {
-
-                });
+                Platform.runLater(() -> ta.appendText("Closing sync with client side at  " +
+                        new Date() + '\n'));
             }
         } catch (IOException e) {
             e.printStackTrace();

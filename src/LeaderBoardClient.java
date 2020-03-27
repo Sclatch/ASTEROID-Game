@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-
+// client side of the SocketIO-based leaderboard system, requires an open LeaderBoardServer on the same port to work
 public class LeaderBoardClient {
 
     static DataInputStream isFromServer;
@@ -13,6 +13,7 @@ public class LeaderBoardClient {
 
     public LeaderBoardClient() {
         try {
+            //seek out LeaderBoardServer
             Socket connectToServer = new Socket("localhost", 8000);
             if(connectToServer==null) {
                 System.exit(0);
@@ -41,6 +42,7 @@ public class LeaderBoardClient {
         return names[i];
     }
 
+    //update data between Client and Server side
     public void connectToServer() {
 
         try {
