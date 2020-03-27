@@ -6,8 +6,9 @@ public class LeaderBoardClient {
 
     static DataInputStream isFromServer;
     static DataOutputStream osToServer;
-    static int[] scores = new int[8];
-    static String[] names = new String[8];
+    static int[] scores = new int[]{0,0,0,0,0,0,0,0};
+
+    static String[] names = new String[]{"","","","","","","",""};
 
     public LeaderBoardClient() {
         try {
@@ -28,30 +29,20 @@ public class LeaderBoardClient {
 
     public static void connectToServer() {
         try {
-            System.out.println("update1");
-            scores[0] = isFromServer.readInt();
-            names[0] = isFromServer.readUTF();
-            scores[1] = isFromServer.readInt();
-            names[1] = isFromServer.readUTF();
-            scores[2] = isFromServer.readInt();
-            names[2] = isFromServer.readUTF();
-            scores[3] = isFromServer.readInt();
-            names[3] = isFromServer.readUTF();
-            scores[4] = isFromServer.readInt();
-            names[4] = isFromServer.readUTF();
-            scores[5] = isFromServer.readInt();
-            names[5] = isFromServer.readUTF();
-            scores[6] = isFromServer.readInt();
-            names[6] = isFromServer.readUTF();
-            scores[7] = isFromServer.readInt();
-            names[7] = isFromServer.readUTF();
-            System.out.println("flush 1");
+            PrintWriter writer = new PrintWriter(osToServer, true);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(isFromServer));
 
+            for(int i=0; i<8; i++) {
+                scores[i]=Integer.parseInt(reader.readLine());
+                names[i]=reader.readLine();
+            }
             System.out.println("update2");
-            osToServer.writeInt(Main.score);
-            osToServer.writeUTF(Main.username);
+            writer.println(Integer.toString(Main.score));
+            writer.println(Main.username);
+
             System.out.println("flush 11");
-            osToServer.flush();
+            writer.close();
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

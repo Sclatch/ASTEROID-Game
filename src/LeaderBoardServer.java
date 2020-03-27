@@ -5,10 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -21,7 +18,6 @@ public class LeaderBoardServer extends Application {
     static int score = 0;
     static String[] names = new String[8];
     static String name;
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -58,9 +54,9 @@ public class LeaderBoardServer extends Application {
             //get text data from f if it is valid
             Scanner input = new Scanner("leaderboard.csv");
             int i = 0;
-            while (input.hasNext()) {
+            while (input.hasNextLine()) {
                 //parse each line for data
-                scores[i] = Integer.parseInt(input.nextLine());
+                scores[i] = Integer.valueOf(input.nextLine());
                 names[i] = input.nextLine();
                 i++;
             }
@@ -96,18 +92,18 @@ public class LeaderBoardServer extends Application {
                 System.out.println("getting commands");
                 System.out.println("Load");
                 load();
-
-                for (int i = 0; i < 8; i++) {
-                    osToClient.write(scores[i]);
-                    osToClient.writeUTF(names[i]);
-
+                PrintWriter writer = new PrintWriter(osToClient, true);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(isFromClient));
+                for(int i=0; i<8; i++) {
+                    writer.println(scores[i]);
+                    writer.println(names[i]);
                 }
-                osToClient.flush();
+
                 System.out.println("save");
                 save();
 
-                score = isFromClient.read();
-                name = isFromClient.readUTF();
+                score = Integer.valueOf(reader.readLine());
+                name = reader.readLine();
 
                 for (int i = 0; i < 8; i++) {
                     if (scores[i] < score) {
