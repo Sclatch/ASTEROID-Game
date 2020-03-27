@@ -49,9 +49,6 @@ public class ScoreSceneController {
     private void keyPressed(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            //TODO:Implement record score
-            //textField.getText()
-            //if (textField.getText() == "") ... //Special case
 
             FadeTransition fadeTransition = new Intro().fadeOut(((Scene) keyEvent.getSource()).getRoot());
             fadeTransition.play();

@@ -91,9 +91,7 @@ public class LeaderBoardServer extends Application {
             //Continuously server the client
             while (true) {
                 try {
-
                     String command = isFromClient.readUTF();
-
                     if (command == "getScores") {
                         load();
                         for (int i = 0; i < 8; i++) {
@@ -101,7 +99,6 @@ public class LeaderBoardServer extends Application {
                             osToClient.writeUTF(names[i]);
                         }
                     }
-
                     if (command == "sendScore") {
                         load();
                         score = isFromClient.read();
@@ -116,7 +113,6 @@ public class LeaderBoardServer extends Application {
                             }
                         }
                         save();
-
                         osToClient.flush();
                     }
                 } catch (IOException e) {

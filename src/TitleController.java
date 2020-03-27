@@ -42,7 +42,9 @@ public class TitleController {
     @FXML private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
     //Leaderboard Elements
     @FXML private Label score1,score2,score3,score4,score5,score6,score7,score8;
+    private Label[] scores = new Label[]{score1, score2, score3, score4, score5, score6, score7, score8};
     @FXML private Label player1,player2,player3,player4,player5,player6,player7,player8;
+    private Label[] names = new Label[]{player1, player2, player3, player4, player5, player6, player7 ,player8};
 
     @FXML
     private void isolateLabel(Label label){
@@ -148,6 +150,9 @@ public class TitleController {
     }
     @FXML
     private void leaderboardLabelClick(){
+
+        //Leaderboard Elements
+
         isolateLabel(leaderboardLabel);
         titleVBox.setDisable(true);
         titleTranslate = menuTransitionEnter(-135);
@@ -157,7 +162,6 @@ public class TitleController {
             backLabel.setDisable(false);
             ScoreGridPane.setOpacity(1);
             ScoreGridPane.setDisable(false);
-
             setScoreText();
         });
     }
@@ -318,17 +322,12 @@ public class TitleController {
     //--------------------------------------------------------------------------------------
     @FXML
     private void setScoreText(){
-        ArrayList<Label> scoreList= new ArrayList<>(Arrays.asList(score1, score2, score3, score4, score5, score6, score7, score8));
-        ArrayList<Label> playerList= new ArrayList<>(Arrays.asList(player1, player2, player3, player4, player5, player6, player7, player8));
-        String csvFile = "src/misc/scores.csv";
-
         Main.leaderBoardClient.getScores();
-
         for(int i=0; i<8; i++) {
-            scoreList.get(i).setText(Integer.toString(Main.leaderBoardClient.scores[i]));
-            playerList.get(i).setText(Main.leaderBoardClient.names[i]);
+            scores[i].setText(Integer.toString(Main.leaderBoardClient.scores[i]));
+            System.out.println(Main.leaderBoardClient.scores[i] + Main.leaderBoardClient.names[i]);
+            names[i].setText(Main.leaderBoardClient.names[i]);
         }
-
     }
     @FXML
     private void backLabelClick(){
