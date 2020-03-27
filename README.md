@@ -1,5 +1,5 @@
 # CSCI 2020 Final Project
-This is the git repository of Final Project of CSCI 2020 Winter Semester. This is a video game project called "ASTEROIDS" that has the requested feature.
+This is the git repository of Final Project of CSCI 2020 Winter Semester. This is a video game project called "ASTEROIDS" that has the requested features.
 
 ## Getting Started
 This instruction will get you a copy of the code up and running on your local machine. Follow the instruction from installing the IDE and Library to Running the Code.
