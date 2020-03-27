@@ -27,7 +27,6 @@ JavaFX SDK 11.0.2
 11. Click OK
 
 ## Running the Code
-There are 4 codes in this repository. Each code has its different requirements to run, but the beginning part is the same for each code.
 
 1. Select Run > Edit Configuration...
 2. Select Application > "+" symbol on the top left > Application
