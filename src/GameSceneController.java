@@ -20,7 +20,7 @@ public class GameSceneController {
     private int sensitivity = ConstantSettings.settingsValues[2];
     private double asteroidSpeed = 2;
     private String selectedMusic = Main.selectedMusic;
-    private int score = 0;
+
     private int life = 3;
     private int laserToggle=0;
     private int shipDamagedFlashingTimer = 0;
@@ -95,8 +95,8 @@ public class GameSceneController {
 
             collisionDetection();
 
-            score ++;
-            scoreLabel.setText(Integer.toString(score));
+            Main.score ++;
+            scoreLabel.setText(Integer.toString(Main.score));
             asteroidSpeed+=0.0005;
         }
     };
@@ -104,7 +104,8 @@ public class GameSceneController {
 
     @FXML
     public void initialize() {
-		
+		Main.score=0;
+
 		asteroids = new ImageView[]{asteroid1, asteroid2, asteroid3, asteroid4, asteroid5, asteroid6, asteroid7, asteroid8};
         for (int i = 0; i < 8; i++){
             resetAsteroid(i);
@@ -348,7 +349,7 @@ public class GameSceneController {
             keyEvent.consume();
         }
 
-        if (keyEvent.getCode() == KeyCode.SPACE){
+        if (keyEvent.getCode() == KeyCode.Z){
             if (gunMeter.getHeight() > 70) {
                 gunMeter.setHeight(gunMeter.getHeight() - 70);
 

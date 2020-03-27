@@ -11,14 +11,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+    public static int score = 0;
+    public static String username;
     public static Music music = new Music();
-
     public static String selectedMusic;
+    public static LeaderBoardClient leaderBoardClient;
 
     public static boolean firstStartup = true;
 
     @Override
     public void start(Stage stage) {
+        leaderBoardClient.connectToServer();
 
         stage.getIcons().add(new Image("/Misc/icon.png"));
         stage.setTitle("JKMN-ASTEROIDS");

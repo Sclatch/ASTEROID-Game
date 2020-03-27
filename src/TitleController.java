@@ -27,33 +27,22 @@ public class TitleController {
     private static boolean playingPreview3 = false;
     private static long menuThemeTime;
 
-    @FXML
-    private VBox titleVBox;
-    @FXML
-    private GridPane ScoreGridPane;
-    @FXML
-    private GridPane BGMGridPane, settingsGridPane;
-    @FXML
-    private ImageView spaceBackground;
+    @FXML private VBox titleVBox;
+    @FXML private GridPane ScoreGridPane;
+    @FXML private GridPane BGMGridPane, settingsGridPane;
+    @FXML private ImageView spaceBackground;
     //Main menu elements
-    @FXML
-    private Label startLabel, leaderboardLabel, BGMLabel, settingsLabel, quitLabel;
+    @FXML private Label startLabel, leaderboardLabel, BGMLabel, settingsLabel, quitLabel;
     //Universal menu elements
-    @FXML
-    private Label backLabel;
+    @FXML private Label backLabel;
     //BGM menu elements
-    @FXML
-    private Label BGMTitle1, BGMTitle2, BGMTitle3, BGMPreview1, BGMPreview2, BGMPreview3, BGMSelect1, BGMSelect2, BGMSelect3;
+    @FXML private Label BGMTitle1, BGMTitle2, BGMTitle3, BGMPreview1, BGMPreview2, BGMPreview3, BGMSelect1, BGMSelect2, BGMSelect3;
     //Settings menu elements
-    @FXML
-    private Label musicVolUP, musicVolDN, effectVolUP, effectVolDN, sensitivityUP, sensitivityDN, musicVolLabel, effectVolLabel, sensitivityLabel;
-    @FXML
-    private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
+    @FXML private Label musicVolUP, musicVolDN, effectVolUP, effectVolDN, sensitivityUP, sensitivityDN, musicVolLabel, effectVolLabel, sensitivityLabel;
+    @FXML private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
     //Leaderboard Elements
-    @FXML
-    private Label score1,score2,score3,score4,score5,score6,score7,score8;
-    @FXML
-    private Label player1,player2,player3,player4,player5,player6,player7,player8;
+    @FXML private Label score1,score2,score3,score4,score5,score6,score7,score8;
+    @FXML private Label player1,player2,player3,player4,player5,player6,player7,player8;
 
     @FXML
     private void isolateLabel(Label label){
@@ -333,26 +322,13 @@ public class TitleController {
         ArrayList<Label> playerList= new ArrayList<>(Arrays.asList(player1, player2, player3, player4, player5, player6, player7, player8));
         String csvFile = "src/misc/scores.csv";
 
-        String line;
+        Main.leaderBoardClient.getScores();
 
-        int i = 0;
-        try {
-
-            BufferedReader br = new BufferedReader(new FileReader(csvFile));
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] csvVal = line.split(",");
-
-                scoreList.get(i).setText(csvVal[1]);
-                playerList.get(i).setText(csvVal[0]);
-
-                i++;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(int i=0; i<8; i++) {
+            scoreList.get(i).setText(Integer.toString(Main.leaderBoardClient.scores[i]));
+            playerList.get(i).setText(Main.leaderBoardClient.names[i]);
         }
+
     }
     @FXML
     private void backLabelClick(){
