@@ -69,7 +69,7 @@ public class ScoreSceneController {
 
             });
             Main.username=textField.getText();
-            Main.leaderBoardClient.sendScore();
+            Main.leaderBoardClient.connectToServer();
         }
     }
 }

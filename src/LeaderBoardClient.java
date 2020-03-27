@@ -6,47 +6,47 @@ public class LeaderBoardClient {
 
     static DataInputStream isFromServer;
     static DataOutputStream osToServer;
-    static Socket connectToServer;
     static int[] scores = new int[8];
     static String[] names = new String[8];
 
-    public static void connectToServer() {
+    public LeaderBoardClient() {
         try {
-            connectToServer = new Socket("localhost", 8000);
+            Socket connectToServer = new Socket("localhost", 8000);
 
             //connect socketIO streams
             isFromServer = new DataInputStream(connectToServer.getInputStream());
             osToServer = new DataOutputStream(connectToServer.getOutputStream());
-
+        }
+        catch (UnknownHostException e) {
+            e.printStackTrace();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void sendScore() {
+    public static void connectToServer() {
         try {
-
-            osToServer.write(Main.score);
+            osToServer.writeInt(Main.score);
             osToServer.writeUTF(Main.username);
-
-
-            scores[0] = isFromServer.read();
+            osToServer.flush();
+            scores[0] = isFromServer.readInt();
             names[0]=isFromServer.readUTF();
-            scores[1] = isFromServer.read();
+            scores[1] = isFromServer.readInt();
             names[1]=isFromServer.readUTF();
-            scores[2] = isFromServer.read();
+            scores[2] = isFromServer.readInt();
             names[2]=isFromServer.readUTF();
-            scores[3] = isFromServer.read();
+            scores[3] = isFromServer.readInt();
             names[3]=isFromServer.readUTF();
-            scores[4] = isFromServer.read();
+            scores[4] = isFromServer.readInt();
             names[4]=isFromServer.readUTF();
-            scores[5] = isFromServer.read();
+            scores[5] = isFromServer.readInt();
             names[5]=isFromServer.readUTF();
-            scores[6] = isFromServer.read();
+            scores[6] = isFromServer.readInt();
             names[6]=isFromServer.readUTF();
-            scores[7] = isFromServer.read();
+            scores[7] = isFromServer.readInt();
             names[7]=isFromServer.readUTF();
+            osToServer.flush();
         }
         catch (IOException e) {
             e.printStackTrace();

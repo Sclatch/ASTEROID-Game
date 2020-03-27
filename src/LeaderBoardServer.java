@@ -108,8 +108,8 @@ public class LeaderBoardServer extends Application {
                         }
                     }
                     save();
-                    osToClient.flush();
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }

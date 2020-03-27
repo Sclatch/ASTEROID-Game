@@ -323,7 +323,7 @@ public class TitleController {
     //--------------------------------------------------------------------------------------
     @FXML
     private void setScoreText(){
-        Main.leaderBoardClient.sendScore();
+        Main.leaderBoardClient.connectToServer();
         for(int i=0; i<8; i++) {
             scores[i].setText(Integer.toString(Main.leaderBoardClient.scores[i]));
             System.out.println(Main.leaderBoardClient.scores[i] + Main.leaderBoardClient.names[i]);
