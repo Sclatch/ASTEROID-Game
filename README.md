@@ -38,5 +38,5 @@ JavaFX SDK 11.0.2
 
 * **Jinhan Liu** |  100721099
 * **Kevin Chandra** | 100708570
-* **Nicolas Belair** | 
-* **Matthew Vrban** | 
+* **Nicolas Belair** | 100709799
+* **Matthew Vrban** | 100708709
