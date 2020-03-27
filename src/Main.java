@@ -36,7 +36,7 @@ public class Main extends Application {
         intro.play();
         music.setSoundFile("menuMusic");
         music.openSoundFile();
-        music.playLong(59000000);
+        music.playLong(58700000);
 
         //when intro animation is finished, load in main menu
         intro.setOnFinished(actionEvent -> {
