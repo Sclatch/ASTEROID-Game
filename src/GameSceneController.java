@@ -32,7 +32,8 @@ public class GameSceneController {
     private Image shipR = new Image("Textures/ShipR.png");
     private Image shipL = new Image("Textures/ShipL.png");
 
-    @FXML private Label scoreLabel;
+    @FXML private Scene scene;
+    @FXML private Label scoreLabel, gameover;
     @FXML private ImageView starBackground, dustBackground, spaceBackground;
     @FXML private ImageView hpBar1, hpBar2, hpBar3;
     @FXML private Rectangle gunMeter;
@@ -159,15 +160,15 @@ public class GameSceneController {
     //----------------------------------------------------------------------------------
 
     //For initializing and start background animation-----------------------------------
-    private ParallelTransition generateAnimation(int milisDuration, ImageView bg, int fromY, int toY){
+    private ParallelTransition generateAnimation(int milisDuration, ImageView bg){
         TranslateTransition transition = new TranslateTransition(Duration.millis(milisDuration), bg);
-        transition.setFromY(fromY);
-        transition.setToY(toY);
+        transition.setFromY(-1600);
+        transition.setToY(0);
         transition.setInterpolator(Interpolator.LINEAR);
 
         TranslateTransition transition1 = new TranslateTransition(Duration.millis(0), bg);
-        transition1.setFromY(toY);
-        transition1.setToY(fromY);
+        transition1.setFromY(0);
+        transition1.setToY(-1600);
         transition1.setInterpolator(Interpolator.LINEAR);
 
         ParallelTransition parallelTransition = new ParallelTransition(transition, transition1);
@@ -177,13 +178,13 @@ public class GameSceneController {
 
     private void parallaxBackground(){
 
-        ParallelTransition parallelTransitionStar = generateAnimation(700, starBackground, -1600, 0);
+        ParallelTransition parallelTransitionStar = generateAnimation(700, starBackground);
         parallelTransitionStar.play();
 
-        ParallelTransition parallelTransitionDust = generateAnimation(8000, dustBackground, -1600, -0);
+        ParallelTransition parallelTransitionDust = generateAnimation(8000, dustBackground);
         parallelTransitionDust.play();
 
-        ParallelTransition parallelTransitionSpace = generateAnimation(20000, spaceBackground, -1600, 0);
+        ParallelTransition parallelTransitionSpace = generateAnimation(20000, spaceBackground);
         parallelTransitionSpace.play();
     }
     //----------------------------------------------------------------------------------
@@ -327,6 +328,31 @@ public class GameSceneController {
             hpBar1.setOpacity(0);
             hpBar2.setOpacity(0);
             hpBar3.setOpacity(0);
+            animationTimer.stop();
+            moveRight = false;
+            moveLeft = false;
+            gameover.setOpacity(1);
+            gameover.setDisable(false);
+            Main.music.stop();
+            FadeTransition fadeTransition = new Intro().fadeOut(scene.getRoot());
+            fadeTransition.setDelay(Duration.seconds(3));
+            fadeTransition.play();
+            fadeTransition.setOnFinished(actionEvent -> {
+                Scene scoreScene = null;
+                try {
+                    scoreScene = FXMLLoader.load(getClass().getResource("ScoreScene.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                scoreScene.getRoot().setOpacity(0);
+                scoreScene.setFill(Color.BLACK);
+                Stage stage = (Stage) scene.getWindow();
+                stage.setScene(scoreScene);
+                FadeTransition fadeTransition2 = new Intro().fadeIn(scoreScene.getRoot());
+                fadeTransition2.play();
+                stage.show();
+            });
         }
     }
 
