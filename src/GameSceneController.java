@@ -83,8 +83,6 @@ public class GameSceneController {
             //ship damage flash------------------------------------------------------------------------
             if(shipDamagedFlashingTimer==0) {
                 spaceship.setVisible(true);
-                //detect asteroid collision with ship and bottom of screen
-                collisionDetection();
             }
             else if(shipDamagedFlashingTimer%8!=0) {
                 spaceship.setVisible(false);
@@ -94,6 +92,8 @@ public class GameSceneController {
                 spaceship.setVisible(true);
                 shipDamagedFlashingTimer--;
             }
+
+            collisionDetection();
 
             score ++;
             scoreLabel.setText(Integer.toString(score));
@@ -143,9 +143,6 @@ public class GameSceneController {
         playDamageNoise();
         shipDamagedFlashingTimer = 90;
         lifeMechanics();
-        for (int x = 0; x < 8; x++){
-            resetAsteroid(x);
-        }
     }
 
     private double generateYSpeed(){
@@ -220,43 +217,47 @@ public class GameSceneController {
         //asteroid movement, asteroid collision detection
         for (int i = 0; i < 8; i++) {
             ImageView asteroid = asteroids[i];
-            //asteroid exits bottom of screen
+            asteroid.setLayoutY(asteroid.getLayoutY() + YSpeed[i]);
+            asteroid.setRotate(asteroid.getRotate() + rotateSpeed[i]);
             if (asteroid.getLayoutY() >= 850) {
-                loseALife();
-            }
-            //lopsided asteroid collision
-            else if (i == 0 || i == 4) {
-                if ((
-                    //left edge of of asteroid
-                    checkCollision(asteroid, -110, 15, -85, -28)
-                   //right edge of of asteroid
-                    ||checkCollision(asteroid, -145, 30, 28, 85)
-                    //closer to center of asteroid
-                    ||checkCollision(asteroid, -135, 30, -28, 28))
-                ) {
+                if(shipDamagedFlashingTimer == 0) {
                     loseALife();
                 }
-                else {
-                    asteroid.setLayoutY(asteroid.getLayoutY() + YSpeed[i]);
-                    asteroid.setRotate(asteroid.getRotate() + rotateSpeed[i]);
-                }
+                resetAsteroid(i);
             }
-            //regular-shaped (rounder) asteroid collision
-            else {
-                if ((//left edge of of asteroid
+            if (shipDamagedFlashingTimer == 0) {
+                //asteroid exits bottom of screen
+                if (asteroid.getLayoutY() >= 850) {
+                    loseALife();
+                }
+                //lopsided asteroid collision
+                else if (i == 0 || i == 4) {
+                    if ((
+                    //left edge of of asteroid
+                    checkCollision(asteroid, -110, 15, -85, -28)
+                    //right edge of of asteroid
+                    || checkCollision(asteroid, -145, 30, 28, 85)
+                    //closer to center of asteroid
+                    || checkCollision(asteroid, -135, 30, -28, 28))
+                    ) {
+                        loseALife();
+                        resetAsteroid(i);
+                    }
+                }
+                //regular-shaped (rounder) asteroid collision
+                else {
+                    if ((//left edge of of asteroid
                     checkCollision(asteroid, -125, 30, -85, -40)
                     //right edge of of asteroid
                     || checkCollision(asteroid, -125, 30, 40, 85)
                     //closer to center of asteroid
                     || checkCollision(asteroid, -145, 30, -40, 40))
-                ) {
-                    loseALife();
-                }
-                else {
-                    asteroid.setLayoutY(asteroid.getLayoutY() + YSpeed[i]);
-                    asteroid.setRotate(asteroid.getRotate() + rotateSpeed[i]);
-                }
-            }// end for loop
+                    ) {
+                        loseALife();
+                        resetAsteroid(i);
+                    }
+                }// end for loop
+            }
         }
     }
 
