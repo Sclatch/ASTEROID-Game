@@ -36,15 +36,15 @@ JavaFX SDK 11.0.2
 
 ## Playing the Game
 
-# Controls
-Movement: LEFT & RIGHT ARROW KEYS
-Slow Down: LEFT-SHIFT
-Shoot: Z
+### Controls
+* Movement: `LEFT & RIGHT ARROW KEYS`
+* Slow Down: `LEFT-SHIFT`
+* Shoot: `Z`
 
-# Objective
-Destroy as many asteroids as you can. 
-DO NOT let any asteroids pass through the screen
-DO NOT let the asteroids hit you.
+### Objective
+* Destroy as many asteroids as you can. 
+* DO NOT let any asteroids pass through the screen
+* DO NOT let the asteroids hit you.
 
 ## Authors
 
