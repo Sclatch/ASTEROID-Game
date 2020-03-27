@@ -7,7 +7,6 @@ public class LeaderBoardClient {
     static DataInputStream isFromServer;
     static DataOutputStream osToServer;
     static int[] scores = new int[]{0,0,0,0,0,0,0,0};
-    static String[] scoreStrings = new String[]{"","","","","","","",""};
     static String[] names = new String[]{"","","","","","","",""};
     static PrintWriter writer;
     static BufferedReader reader;
@@ -32,15 +31,27 @@ public class LeaderBoardClient {
         }
     }
 
-    public static void connectToServer() {
+    public int[] getScores() {
+        return scores;
+    }
+
+    public String[] getNames() {
+        return names;
+    }
+
+    public void connectToServer() {
         try {
             for(int i=0; i<8; i++) {
-                scoreStrings[i]=reader.readLine();
-                scores[i]=Integer.parseInt(scoreStrings[i]);
+                scores[i]=Integer.parseInt(reader.readLine());
                 names[i]=reader.readLine();
             }
             writer.println(Main.score);
             writer.println(Main.username);
+
+            System.out.println(Main.score + " " + Main.username);
+            for(int i=0; i<8; i++) {
+                System.out.println(scores[i]+ " " +names[i]);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

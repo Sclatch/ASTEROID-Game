@@ -56,5 +56,15 @@ public class Main extends Application {
 
 
     }
+
+    public static LeaderBoardClient getClient() {
+        return leaderBoardClient;
+    }
+    public static int[] getClientScores() {
+        return leaderBoardClient.scores;
+    }
+    public static String[] getClientNames() {
+        return leaderBoardClient.names;
+    }
 }
 

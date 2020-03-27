@@ -27,7 +27,6 @@ public class LeaderBoardServer extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Leaderboard Server");
         primaryStage.show();
-        System.out.println("Thread start");
         Thread t1 = new Thread(() -> connectToClient());
         t1.start();
     }
@@ -69,7 +68,6 @@ public class LeaderBoardServer extends Application {
     }
 
     public void connectToClient() {
-        System.out.println("Trying");
         try {
             ServerSocket serverSocket = new ServerSocket(8000);
             Platform.runLater(() -> ta.appendText("Server started at " +
