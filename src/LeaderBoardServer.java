@@ -103,9 +103,11 @@ public class LeaderBoardServer extends Application {
                     if (scores[i] < score) {
                         for (int j = 7; j > i; j--) {
                             scores[j] = scores[j - 1];
+                            names[j] = names[j-1];
                         }
                         scores[i] = score;
                         names[i] = name;
+                        break;
                     }
                 }
                 save();

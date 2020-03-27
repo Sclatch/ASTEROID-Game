@@ -12,9 +12,10 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static int score = -1;
-    public static String username = "placeholder";
+    public static String username = "Anonymous";
     public static Music music = new Music();
     public static String selectedMusic;
+    public static boolean newScoreReady=false;
     public static LeaderBoardClient leaderBoardClient = new LeaderBoardClient();
 
     public static boolean firstStartup = true;
@@ -60,11 +61,11 @@ public class Main extends Application {
     public static LeaderBoardClient getClient() {
         return leaderBoardClient;
     }
-    public static int[] getClientScores() {
-        return leaderBoardClient.scores;
+    public static int getClientScores(int i) {
+        return leaderBoardClient.getScores(i);
     }
-    public static String[] getClientNames() {
-        return leaderBoardClient.names;
+    public static String getClientNames(int i) {
+        return leaderBoardClient.getNames(i);
     }
 }
 

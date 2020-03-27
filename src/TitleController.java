@@ -42,9 +42,10 @@ public class TitleController {
     @FXML private Label settingsMusicLabel, settingsEffectLabel, settingsSensitivityLabel;
     //Leaderboard Elements
     @FXML private Label score1,score2,score3,score4,score5,score6,score7,score8;
-    private Label[] scores = new Label[]{score1, score2, score3, score4, score5, score6, score7, score8};
     @FXML private Label player1,player2,player3,player4,player5,player6,player7,player8;
-    private Label[] names = new Label[]{player1, player2, player3, player4, player5, player6, player7 ,player8};
+    private Label[] scores;
+
+    private Label[] names;
 
     @FXML
     private void isolateLabel(Label label){
@@ -92,7 +93,17 @@ public class TitleController {
     }
     @FXML
     private void initialize(){
+        Main.leaderBoardClient.connectToServer();
         goBack();
+
+        scores = new Label[]{score1, score2, score3, score4, score5, score6, score7, score8};
+        names = new Label[]{player1, player2, player3, player4, player5, player6, player7 ,player8};
+        for(Label i: scores) {
+            i.setPrefWidth(500);
+        }
+        for(Label i: names)  {
+            i.setPrefWidth(500);
+        }
 
         musicVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[0]));
         effectVolLabel.setText(Integer.toString(ConstantSettings.settingsValues[1]));
@@ -325,9 +336,8 @@ public class TitleController {
     private void setScoreText(){
         Main.getClient().connectToServer();
         for(int i=0; i<8; i++) {
-            scores[i].setText(String.valueOf((Main.getClient().getScores()[i])));
-            System.out.println(Main.getClient().getScores()[i] + Main.getClient().getNames()[i]);
-            names[i].setText(Main.getClient().getNames()[i]);
+            scores[i].setText(String.valueOf((Main.getClientScores(i))));
+            names[i].setText(Main.getClientNames(i));
         }
     }
     @FXML

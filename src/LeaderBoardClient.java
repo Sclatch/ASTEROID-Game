@@ -13,8 +13,10 @@ public class LeaderBoardClient {
 
     public LeaderBoardClient() {
         try {
-            System.out.println("1");
             Socket connectToServer = new Socket("localhost", 8000);
+            if(connectToServer==null) {
+                System.exit(0);
+            }
 
             //connect socketIO streams
             isFromServer = new DataInputStream(connectToServer.getInputStream());
@@ -31,26 +33,29 @@ public class LeaderBoardClient {
         }
     }
 
-    public int[] getScores() {
-        return scores;
+    public int getScores(int i) {
+        return scores[i];
     }
 
-    public String[] getNames() {
-        return names;
+    public String getNames(int i) {
+        return names[i];
     }
 
     public void connectToServer() {
+
         try {
             for(int i=0; i<8; i++) {
                 scores[i]=Integer.parseInt(reader.readLine());
                 names[i]=reader.readLine();
             }
-            writer.println(Main.score);
-            writer.println(Main.username);
-
-            System.out.println(Main.score + " " + Main.username);
-            for(int i=0; i<8; i++) {
-                System.out.println(scores[i]+ " " +names[i]);
+            if(Main.newScoreReady) {
+                writer.println(Main.score);
+                writer.println(Main.username);
+                Main.newScoreReady=false;
+            }
+            else {
+                writer.println(-1);
+                writer.println("Anonymous");
             }
 
         } catch (IOException e) {

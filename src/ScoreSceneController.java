@@ -24,6 +24,7 @@ public class ScoreSceneController {
 
     @FXML
     private void initialize() {
+        Main.newScoreReady=true;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(25000), background);
         translateTransition.setFromY(-800);
