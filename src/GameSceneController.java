@@ -1,5 +1,4 @@
 import javafx.animation.*;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +10,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -21,7 +18,7 @@ import java.io.IOException;
 public class GameSceneController {
 
     private int sensitivity = ConstantSettings.settingsValues[2];
-    private double asteroidSpeed=2.0;
+    private double asteroidSpeed = 2;
     private String selectedMusic = Main.selectedMusic;
     private int score = 0;
     private int life = 3;
@@ -34,32 +31,30 @@ public class GameSceneController {
     private Image ship = new Image("Textures/Ship.png");
     private Image shipR = new Image("Textures/ShipR.png");
     private Image shipL = new Image("Textures/ShipL.png");
+
     @FXML private Label scoreLabel;
     @FXML private ImageView starBackground, dustBackground, spaceBackground;
     @FXML private ImageView hpBar1, hpBar2, hpBar3;
     @FXML private Rectangle gunMeter;
-    @FXML private ImageView laserBeam1;
-    @FXML private ImageView laserBeam2;
-    @FXML private ImageView asteroid1;
-    @FXML private ImageView asteroid2;
-    @FXML private ImageView asteroid3;
-    @FXML private ImageView asteroid4;
-    @FXML private ImageView asteroid5;
-    @FXML private ImageView asteroid6;
-    @FXML private ImageView asteroid7;
-    @FXML private ImageView asteroid8;
-    private ImageView[] asteroids = new ImageView[8];
+    @FXML private ImageView laserBeam1, laserBeam2;
+    @FXML private ImageView asteroid1, asteroid2, asteroid3, asteroid4, asteroid5, asteroid6, asteroid7, asteroid8;
+
+    private ImageView[] asteroids;
+    private double[] YSpeed = new double[8];
+    private double[] rotateSpeed = new double[8];
+    //private double[] scaleFactor = new double[8];
 
 
     private AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            //ship movement
+
+            //ship movement----------------------------------------------------------------------------
             if(moveLeft && !moveRight){
                 if(spaceship.getTranslateX() > -640) {
                     spaceship.setTranslateX(spaceship.getTranslateX() - sensitivity + (moveSlow * 10));
                 }
-                else if(spaceship.getTranslateX() == -640){
+                else{
                     spaceship.setTranslateX(spaceship.getTranslateX() - 5);
                 }
                 spaceship.setImage(shipL);
@@ -68,7 +63,7 @@ public class GameSceneController {
                 if(spaceship.getTranslateX() < 580) {
                     spaceship.setTranslateX(spaceship.getTranslateX() + sensitivity - (moveSlow * 10));
                 }
-                else if (spaceship.getTranslateX() == 580){
+                else{
                     spaceship.setTranslateX(spaceship.getTranslateX() + 5);
                 }
                 spaceship.setImage(shipR);
@@ -76,18 +71,20 @@ public class GameSceneController {
             if ((moveRight && moveLeft) || (!moveRight && !moveLeft)) {
                 spaceship.setImage(ship);
             }
-
-            //gun power meter
+            //-----------------------------------------------------------------------------------------
+            //gun power meter--------------------------------------------------------------------------
             if (gunMeter.getHeight() <= 116){
                 gunMeter.setHeight(gunMeter.getHeight() + 4);
             }
             else if (gunMeter.getHeight() > 116){
                 gunMeter.setHeight(116);
             }
-
-            //ship damage flash
+            //-----------------------------------------------------------------------------------------
+            //ship damage flash------------------------------------------------------------------------
             if(shipDamagedFlashingTimer==0) {
                 spaceship.setVisible(true);
+                //detect asteroid collision with ship and bottom of screen
+                collisionDetection();
             }
             else if(shipDamagedFlashingTimer%8!=0) {
                 spaceship.setVisible(false);
@@ -98,14 +95,9 @@ public class GameSceneController {
                 shipDamagedFlashingTimer--;
             }
 
-            //detect asteroid collision with ship and bottom of screen
-            collisionDetection();
-            //update life
-            lifeMechanics();
-
             score ++;
             scoreLabel.setText(Integer.toString(score));
-            asteroidSpeed+=0.0001;
+            asteroidSpeed+=0.0005;
         }
     };
 
@@ -113,25 +105,17 @@ public class GameSceneController {
     @FXML
     public void initialize() {
 		
-		asteroids[0]=asteroid1;
-        asteroids[1]=asteroid2;
-        asteroids[2]=asteroid3;
-        asteroids[3]=asteroid4;
-        asteroids[4]=asteroid5;
-        asteroids[5]=asteroid6;
-        asteroids[6]=asteroid7;
-        asteroids[7]=asteroid8;
-        spaceship.setImage(ship);
-        for(ImageView i: asteroids) {
-            i.setLayoutY(Math.random()*(-1200)-100);
-            i.setLayoutX(590);
-            i.setTranslateX(Math.random()*(495+555-1)-555);
+		asteroids = new ImageView[]{asteroid1, asteroid2, asteroid3, asteroid4, asteroid5, asteroid6, asteroid7, asteroid8};
+        for (int i = 0; i < 8; i++){
+            resetAsteroid(i);
         }
+
+        spaceship.setImage(ship);
+
         laserBeam1.setTranslateY(spaceship.getTranslateY());
         laserBeam2.setTranslateY(spaceship.getTranslateY());
-        //game animations
+        //start animation loop
         animationTimer.start();
-
 
         //Background scrolling
         parallaxBackground();
@@ -144,47 +128,70 @@ public class GameSceneController {
         Main.music.play();
     }
 
-    private void parallaxBackground(){
-        TranslateTransition translateTransitionStar = new TranslateTransition(Duration.millis(700), starBackground);
-        translateTransitionStar.setFromY(-1600);
-        translateTransitionStar.setToY(0);
-        translateTransitionStar.setInterpolator(Interpolator.LINEAR);
-
-        TranslateTransition translateTransitionDust = new TranslateTransition(Duration.millis(8000), dustBackground);
-        translateTransitionDust.setFromY(0);
-        translateTransitionDust.setToY(-1600);
-        translateTransitionDust.setInterpolator(Interpolator.LINEAR);
-
-        TranslateTransition translateTransitionSpace = new TranslateTransition(Duration.millis(20000), spaceBackground);
-        translateTransitionSpace.setFromY(-1600);
-        translateTransitionSpace.setToY(0);
-        translateTransitionSpace.setInterpolator(Interpolator.LINEAR);
-
-        TranslateTransition translateTransitionStar2 = new TranslateTransition(Duration.millis(0), starBackground);
-        translateTransitionStar2.setFromY(0);
-        translateTransitionStar2.setToY(-1600);
-
-        TranslateTransition translateTransitionDust2 = new TranslateTransition(Duration.millis(0), dustBackground);
-        translateTransitionDust.setFromY(-1600);
-        translateTransitionDust.setToY(0);
-
-        TranslateTransition translateTransitionSpace2 = new TranslateTransition(Duration.millis(0), spaceBackground);
-        translateTransitionSpace2.setFromY(0);
-        translateTransitionSpace2.setToY(-1600);
-
-        ParallelTransition parallelTransitionStar = new ParallelTransition(translateTransitionStar, translateTransitionStar2);
-        parallelTransitionStar.setCycleCount(Animation.INDEFINITE);
-        parallelTransitionStar.play();
-
-        ParallelTransition parallelTransitionDust = new ParallelTransition(translateTransitionDust, translateTransitionDust2);
-        parallelTransitionDust.setCycleCount(Animation.INDEFINITE);
-        parallelTransitionDust.play();
-
-        ParallelTransition parallelTransitionSpace = new ParallelTransition(translateTransitionSpace, translateTransitionSpace2);
-        parallelTransitionSpace.setCycleCount(Animation.INDEFINITE);
-        parallelTransitionSpace.play();
+    //For re-assigning values-----------------------------------------------------------
+    private void resetAsteroid(int i){
+        YSpeed[i] = generateYSpeed();
+        rotateSpeed[i] = generateRotateSpeed();
+        //scaleFactor[i] = generateScaleFactor();
+        asteroids[i].setLayoutY(Math.random()*(-1200)-150);
+        asteroids[i].setLayoutX(590);
+        asteroids[i].setTranslateX(Math.random()*(495+555-1)-555);
     }
 
+    private void loseALife(){
+        life--;
+        playDamageNoise();
+        shipDamagedFlashingTimer = 90;
+        lifeMechanics();
+        for (int x = 0; x < 8; x++){
+            resetAsteroid(x);
+        }
+    }
+
+    private double generateYSpeed(){
+        return Math.random() * 4 + asteroidSpeed;
+    }
+
+    private double generateRotateSpeed(){
+        return Math.random() * 10 - Math.random() * 10;
+    }
+
+//    private double generateScaleFactor(){
+//        return Math.random() * 0.4 + 0.6;
+//    }
+    //----------------------------------------------------------------------------------
+
+    //For initializing and start background animation-----------------------------------
+    private ParallelTransition generateAnimation(int milisDuration, ImageView bg, int fromY, int toY){
+        TranslateTransition transition = new TranslateTransition(Duration.millis(milisDuration), bg);
+        transition.setFromY(fromY);
+        transition.setToY(toY);
+        transition.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition transition1 = new TranslateTransition(Duration.millis(0), bg);
+        transition1.setFromY(toY);
+        transition1.setToY(fromY);
+        transition1.setInterpolator(Interpolator.LINEAR);
+
+        ParallelTransition parallelTransition = new ParallelTransition(transition, transition1);
+        parallelTransition.setCycleCount(Animation.INDEFINITE);
+        return parallelTransition;
+    }
+
+    private void parallaxBackground(){
+
+        ParallelTransition parallelTransitionStar = generateAnimation(700, starBackground, -1600, 0);
+        parallelTransitionStar.play();
+
+        ParallelTransition parallelTransitionDust = generateAnimation(8000, dustBackground, -1600, -0);
+        parallelTransitionDust.play();
+
+        ParallelTransition parallelTransitionSpace = generateAnimation(20000, spaceBackground, -1600, 0);
+        parallelTransitionSpace.play();
+    }
+    //----------------------------------------------------------------------------------
+
+    //Play sounds-----------------------------------------------------------------------
     private void playLaserNoise() {
         SoundEffect laserSound = new SoundEffect("LaserFire");
         laserSound.play();
@@ -199,6 +206,15 @@ public class GameSceneController {
         SoundEffect damageSound = new SoundEffect("takeDamage");
         damageSound.play();
     }
+    //----------------------------------------------------------------------------------
+
+    //Check if objects collide----------------------------------------------------------
+    private boolean checkCollision(ImageView asteroid, int offset1, int offset2, int offset3, int offset4){
+        return (asteroid.getLayoutY() >= spaceship.getLayoutY() + offset1
+                && asteroid.getLayoutY() <= spaceship.getLayoutY() + offset2
+                && asteroid.getTranslateX() >= spaceship.getTranslateX() + offset3
+                && asteroid.getTranslateX() <= spaceship.getTranslateX() + offset4);
+    }
 
     private void collisionDetection() {
         //asteroid movement, asteroid collision detection
@@ -206,64 +222,39 @@ public class GameSceneController {
             ImageView asteroid = asteroids[i];
             //asteroid exits bottom of screen
             if (asteroid.getLayoutY() >= 850) {
-                life--;
-                playDamageNoise();
-                shipDamagedFlashingTimer = 90;
-                asteroid.setLayoutY(Math.random() * (-1200) - 100);
-                asteroid.setTranslateX(Math.random() * (495 + 555 - 1) - 555);
+                loseALife();
             }
             //lopsided asteroid collision
             else if (i == 0 || i == 4) {
-                if (//left edge of of asteroid
-                (asteroid.getLayoutY() >= spaceship.getLayoutY() - 110
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 15
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() - 28)
-                //right edge of of asteroid
-                || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() + 28
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
-                //closer to center of asteroid
-                || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 135
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() - 28
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() + 28)) {
-                    life--;
-                    playDamageNoise();
-                    shipDamagedFlashingTimer = 90;
-                    asteroid.setLayoutY(Math.random() * (-1200) - 100);
-                    asteroid.setTranslateX(Math.random() * (495 + 555 - 1) - 555);
+                if ((
+                    //left edge of of asteroid
+                    checkCollision(asteroid, -110, 15, -85, -28)
+                   //right edge of of asteroid
+                    ||checkCollision(asteroid, -145, 30, 28, 85)
+                    //closer to center of asteroid
+                    ||checkCollision(asteroid, -135, 30, -28, 28))
+                ) {
+                    loseALife();
                 }
                 else {
-                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                    asteroid.setLayoutY(asteroid.getLayoutY() + YSpeed[i]);
+                    asteroid.setRotate(asteroid.getRotate() + rotateSpeed[i]);
                 }
             }
             //regular-shaped (rounder) asteroid collision
             else {
-                if (//left edge of of asteroid
-                (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() - 85
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() - 40)
-                //right edge of of asteroid
-                || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 125
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() + 40
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() + 85)
-                //closer to center of asteroid
-                || (asteroid.getLayoutY() >= spaceship.getLayoutY() - 145
-                && asteroid.getLayoutY() <= spaceship.getLayoutY() + 30
-                && asteroid.getTranslateX() >= spaceship.getTranslateX() - 40
-                && asteroid.getTranslateX() <= spaceship.getTranslateX() + 40)) {
-                    life--;
-                    playDamageNoise();
-                    shipDamagedFlashingTimer = 90;
-                    asteroid.setLayoutY(Math.random() * (-1200) - 100);
-                    asteroid.setTranslateX(Math.random() * (495 + 555 - 1) - 555);
+                if ((//left edge of of asteroid
+                    checkCollision(asteroid, -125, 30, -85, -40)
+                    //right edge of of asteroid
+                    || checkCollision(asteroid, -125, 30, 40, 85)
+                    //closer to center of asteroid
+                    || checkCollision(asteroid, -145, 30, -40, 40))
+                ) {
+                    loseALife();
                 }
                 else {
-                    asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+                    asteroid.setLayoutY(asteroid.getLayoutY() + YSpeed[i]);
+                    asteroid.setRotate(asteroid.getRotate() + rotateSpeed[i]);
                 }
             }// end for loop
         }
@@ -290,8 +281,7 @@ public class GameSceneController {
             && asteroid.getTranslateX() >= laserBeam.getTranslateX() - 85
             && asteroid.getTranslateX() <= laserBeam.getTranslateX() + 85) {
                 playExplosionNoise();
-                asteroid.setLayoutY(Math.random() * (-1200) - 100);
-                asteroid.setTranslateX(Math.random() * (495 + 555 - 1) - 555);
+                resetAsteroid(i);
             }
         }// end for loop
 
@@ -310,6 +300,8 @@ public class GameSceneController {
         ParallelTransition laser = new ParallelTransition(laserShrink,laserGrow);
         laser.play();
     }
+    //----------------------------------------------------------------------------------
+
 
     private void lifeMechanics(){
         if (life == 3){
@@ -355,7 +347,7 @@ public class GameSceneController {
             keyEvent.consume();
         }
 
-        if (keyEvent.getCode() == KeyCode.Z){
+        if (keyEvent.getCode() == KeyCode.SPACE){
             if (gunMeter.getHeight() > 70) {
                 gunMeter.setHeight(gunMeter.getHeight() - 70);
 
@@ -369,18 +361,6 @@ public class GameSceneController {
             }
             keyEvent.consume();
         }
-
-        //THIS IS FOR DEBUGGING THE LIFE
-        if (keyEvent.getCode() == KeyCode.C){
-            life -= 1;
-            keyEvent.consume();
-        }
-
-        if (keyEvent.getCode() == KeyCode.V){
-            life += 1;
-            keyEvent.consume();
-        }
-        //-------------------------------
 
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             animationTimer.stop();

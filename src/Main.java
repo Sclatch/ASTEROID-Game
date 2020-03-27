@@ -18,7 +18,7 @@ public class Main extends Application {
     public static boolean firstStartup = true;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
         stage.getIcons().add(new Image("/Misc/icon.png"));
         stage.setTitle("JKMN-ASTEROIDS");
