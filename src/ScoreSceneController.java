@@ -68,6 +68,8 @@ public class ScoreSceneController {
                 stage.show();
 
             });
+            Main.username=textField.getText();
+            Main.leaderBoardClient.sendScore();
         }
     }
 }

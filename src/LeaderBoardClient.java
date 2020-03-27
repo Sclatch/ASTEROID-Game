@@ -26,19 +26,11 @@ public class LeaderBoardClient {
 
     public static void sendScore() {
         try {
-            osToServer.writeUTF("sendScore");
+
             osToServer.write(Main.score);
             osToServer.writeUTF(Main.username);
-            osToServer.flush();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static void getScores() {
-        try {
-            osToServer.writeUTF("getScores");
+
             scores[0] = isFromServer.read();
             names[0]=isFromServer.readUTF();
             scores[1] = isFromServer.read();
@@ -55,7 +47,6 @@ public class LeaderBoardClient {
             names[6]=isFromServer.readUTF();
             scores[7] = isFromServer.read();
             names[7]=isFromServer.readUTF();
-            osToServer.flush();
         }
         catch (IOException e) {
             e.printStackTrace();

@@ -162,8 +162,9 @@ public class TitleController {
             backLabel.setDisable(false);
             ScoreGridPane.setOpacity(1);
             ScoreGridPane.setDisable(false);
-            setScoreText();
+
         });
+        setScoreText();
     }
     @FXML
     private void BGMLabelClick(){
@@ -322,7 +323,7 @@ public class TitleController {
     //--------------------------------------------------------------------------------------
     @FXML
     private void setScoreText(){
-        Main.leaderBoardClient.getScores();
+        Main.leaderBoardClient.sendScore();
         for(int i=0; i<8; i++) {
             scores[i].setText(Integer.toString(Main.leaderBoardClient.scores[i]));
             System.out.println(Main.leaderBoardClient.scores[i] + Main.leaderBoardClient.names[i]);

@@ -48,7 +48,7 @@ public class LeaderBoardServer extends Application {
         }
         //if text file is invalid
         catch (Exception e) {
-            System.exit(2);
+            e.printStackTrace();
         }
     }
 
@@ -67,7 +67,7 @@ public class LeaderBoardServer extends Application {
         }
         //if text file is invalid
         catch (Exception e) {
-            System.exit(2);
+            e.printStackTrace();
         }
     }
 
@@ -78,7 +78,6 @@ public class LeaderBoardServer extends Application {
                     new Date() + '\n'));
 
             Socket connectToClient = serverSocket.accept();
-
 
             //Display the client number
             Platform.runLater(() -> ta.appendText("Connected to a client at " +
@@ -91,32 +90,27 @@ public class LeaderBoardServer extends Application {
             //Continuously server the client
             while (true) {
                 try {
-                    String command = isFromClient.readUTF();
-                    if (command == "getScores") {
-                        load();
-                        for (int i = 0; i < 8; i++) {
-                            osToClient.write(scores[i]);
-                            osToClient.writeUTF(names[i]);
-                        }
-                    }
-                    if (command == "sendScore") {
-                        load();
-                        score = isFromClient.read();
-                        name = isFromClient.readUTF();
+                    load();
+                    score = isFromClient.read();
+                    name = isFromClient.readUTF();
 
-                        for(int i=0; i<8; i++) {
-                            if(scores[i]<score) {
-                                for(int j=7; j>i; j--) {
-                                    scores[j]=scores[j-1];
-                                }
-                                scores[i]=score;
-                            }
-                        }
-                        save();
-                        osToClient.flush();
+                    for (int i = 0; i < 8; i++) {
+                        osToClient.write(scores[i]);
+                        osToClient.writeUTF(names[i]);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    for (int i = 0; i < 8; i++) {
+                        if (scores[i] < score) {
+                            for (int j = 7; j > i; j--) {
+                                scores[j] = scores[j - 1];
+                            }
+                            scores[i] = score;
+                        }
+                    }
+                    save();
+                    osToClient.flush();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
         } catch (IOException e) {
