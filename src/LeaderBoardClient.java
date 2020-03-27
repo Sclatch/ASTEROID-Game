@@ -7,8 +7,10 @@ public class LeaderBoardClient {
     static DataInputStream isFromServer;
     static DataOutputStream osToServer;
     static int[] scores = new int[]{0,0,0,0,0,0,0,0};
-
+    static String[] scoreStrings = new String[]{"","","","","","","",""};
     static String[] names = new String[]{"","","","","","","",""};
+    static PrintWriter writer;
+    static BufferedReader reader;
 
     public LeaderBoardClient() {
         try {
@@ -18,6 +20,9 @@ public class LeaderBoardClient {
             //connect socketIO streams
             isFromServer = new DataInputStream(connectToServer.getInputStream());
             osToServer = new DataOutputStream(connectToServer.getOutputStream());
+
+            writer = new PrintWriter(osToServer, true);
+            reader = new BufferedReader(new InputStreamReader(isFromServer));
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
@@ -29,20 +34,14 @@ public class LeaderBoardClient {
 
     public static void connectToServer() {
         try {
-            PrintWriter writer = new PrintWriter(osToServer, true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(isFromServer));
-
             for(int i=0; i<8; i++) {
-                scores[i]=Integer.parseInt(reader.readLine());
+                scoreStrings[i]=reader.readLine();
+                scores[i]=Integer.parseInt(scoreStrings[i]);
                 names[i]=reader.readLine();
             }
-            System.out.println("update2");
-            writer.println(Integer.toString(Main.score));
+            writer.println(Main.score);
             writer.println(Main.username);
 
-            System.out.println("flush 11");
-            writer.close();
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

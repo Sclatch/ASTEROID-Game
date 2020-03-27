@@ -35,7 +35,7 @@ public class LeaderBoardServer extends Application {
     private void save() {
         try {
             //get text data from f if it is valid
-            PrintWriter output = new PrintWriter("leaderboard.csv");
+            PrintWriter output = new PrintWriter(new File("src/leaderboard.csv"));
             for (int i = 0; i < 8; i++) {
                 //write new line of data
                 output.println(scores[i]);
@@ -52,11 +52,11 @@ public class LeaderBoardServer extends Application {
     private void load() {
         try {
             //get text data from f if it is valid
-            Scanner input = new Scanner("leaderboard.csv");
+            Scanner input = new Scanner(new File("src/leaderboard.csv"));
             int i = 0;
             while (input.hasNextLine()) {
                 //parse each line for data
-                scores[i] = Integer.valueOf(input.nextLine());
+                scores[i] = Integer.parseInt(input.nextLine());
                 names[i] = input.nextLine();
                 i++;
             }
@@ -86,11 +86,8 @@ public class LeaderBoardServer extends Application {
             DataOutputStream osToClient = new DataOutputStream(connectToClient.getOutputStream());
 
             //Continuously server the client
-            System.out.println("Loop begins");
             while (true) {
 
-                System.out.println("getting commands");
-                System.out.println("Load");
                 load();
                 PrintWriter writer = new PrintWriter(osToClient, true);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(isFromClient));
@@ -99,10 +96,9 @@ public class LeaderBoardServer extends Application {
                     writer.println(names[i]);
                 }
 
-                System.out.println("save");
                 save();
 
-                score = Integer.valueOf(reader.readLine());
+                score = Integer.parseInt(reader.readLine());
                 name = reader.readLine();
 
                 for (int i = 0; i < 8; i++) {
@@ -114,14 +110,12 @@ public class LeaderBoardServer extends Application {
                         names[i] = name;
                     }
                 }
-                System.out.println("save");
                 save();
 
-                System.out.println("Load");
                 load();
 
                 Platform.runLater( () -> {
-                    System.out.println("Reset");
+
                 });
             }
         } catch (IOException e) {
