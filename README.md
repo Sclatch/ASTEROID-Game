@@ -34,6 +34,18 @@ JavaFX SDK 11.0.2
 4. Put the appropriate code's name in the Name textfield
 5. In Main Class textfield, write "`Main`"
 
+## Playing the Game
+
+# Controls
+Movement: LEFT & RIGHT ARROW KEYS
+Slow Down: LEFT-SHIFT
+Shoot: Z
+
+# Objective
+Destroy as many asteroids as you can. 
+DO NOT let any asteroids pass through the screen
+DO NOT let the asteroids hit you.
+
 ## Authors
 
 * **Jinhan Liu** |  100721099
