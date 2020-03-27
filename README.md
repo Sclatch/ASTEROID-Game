@@ -30,7 +30,7 @@ JavaFX SDK 11.0.2
 
 1. Select Run > Edit Configuration...
 2. Select Application > "+" symbol on the top left > Application
-3. In VM Options textfield, write "`(JavaFX SDK Root Folder)\lib --add-modules javafx.controls,javafx.fxml`"
+3. In VM Options textfield, write "`--module-path (JavaFX SDK Root Folder)\lib --add-modules javafx.controls,javafx.fxml`"
 4. Put the appropriate code's name in the Name textfield
 5. In Main Class textfield, write "`Main`"
 
