@@ -18,28 +18,29 @@ import java.util.Scanner;
 public class LeaderBoardServer extends Application {
     private TextArea ta = new TextArea();
     static int[] scores = new int[8];
-    static int score=0;
+    static int score = 0;
     static String[] names = new String[8];
     static String name;
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         ta.setWrapText(true);
         //Create a scene and place it in the stage
-        Scene scene = new Scene(new ScrollPane(ta), 200, 200);
+        Scene scene = new Scene(new ScrollPane(ta), 300, 200);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Leaderboard Server");
         primaryStage.show();
-
-        new Thread (() -> connectToClient()).start();
+        System.out.println("Thread start");
+        Thread t1 = new Thread(() -> connectToClient());
+        t1.start();
     }
 
     private void save() {
         try {
             //get text data from f if it is valid
             PrintWriter output = new PrintWriter("leaderboard.csv");
-            for(int i=0; i<8; i++) {
+            for (int i = 0; i < 8; i++) {
                 //write new line of data
                 output.println(scores[i]);
                 output.println(names[i]);
@@ -56,11 +57,11 @@ public class LeaderBoardServer extends Application {
         try {
             //get text data from f if it is valid
             Scanner input = new Scanner("leaderboard.csv");
-            int i=0;
-            while(input.hasNext()) {
+            int i = 0;
+            while (input.hasNext()) {
                 //parse each line for data
-                scores[i]=Integer.parseInt(input.nextLine());
-                names[i]=input.nextLine();
+                scores[i] = Integer.parseInt(input.nextLine());
+                names[i] = input.nextLine();
                 i++;
             }
             input.close();
@@ -71,7 +72,8 @@ public class LeaderBoardServer extends Application {
         }
     }
 
-    public void connectToClient(){
+    public void connectToClient() {
+        System.out.println("Trying");
         try {
             ServerSocket serverSocket = new ServerSocket(8000);
             Platform.runLater(() -> ta.appendText("Server started at " +
@@ -88,30 +90,43 @@ public class LeaderBoardServer extends Application {
             DataOutputStream osToClient = new DataOutputStream(connectToClient.getOutputStream());
 
             //Continuously server the client
+            System.out.println("Loop begins");
             while (true) {
-                try {
-                    load();
-                    score = isFromClient.read();
-                    name = isFromClient.readUTF();
 
-                    for (int i = 0; i < 8; i++) {
-                        osToClient.write(scores[i]);
-                        osToClient.writeUTF(names[i]);
-                    }
+                System.out.println("getting commands");
+                System.out.println("Load");
+                load();
 
-                    for (int i = 0; i < 8; i++) {
-                        if (scores[i] < score) {
-                            for (int j = 7; j > i; j--) {
-                                scores[j] = scores[j - 1];
-                            }
-                            scores[i] = score;
+                for (int i = 0; i < 8; i++) {
+                    osToClient.write(scores[i]);
+                    osToClient.writeUTF(names[i]);
+
+                }
+                osToClient.flush();
+                System.out.println("save");
+                save();
+
+                score = isFromClient.read();
+                name = isFromClient.readUTF();
+
+                for (int i = 0; i < 8; i++) {
+                    if (scores[i] < score) {
+                        for (int j = 7; j > i; j--) {
+                            scores[j] = scores[j - 1];
                         }
+                        scores[i] = score;
+                        names[i] = name;
                     }
-                    save();
                 }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                System.out.println("save");
+                save();
+
+                System.out.println("Load");
+                load();
+
+                Platform.runLater( () -> {
+                    System.out.println("Reset");
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();

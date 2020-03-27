@@ -21,7 +21,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
         stage.getIcons().add(new Image("/Misc/icon.png"));
         stage.setTitle("JKMN-ASTEROIDS");
         stage.setWidth(1280);
