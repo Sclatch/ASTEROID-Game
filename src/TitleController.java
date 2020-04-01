@@ -89,7 +89,7 @@ public class TitleController {
     }
     @FXML
     private void initialize(){
-        Main.leaderBoardClient.connectToServer();
+        Main.getClient().connectToServer();
         goBack();
 
         scores = new Label[]{score1, score2, score3, score4, score5, score6, score7, score8};

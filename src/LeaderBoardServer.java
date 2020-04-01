@@ -28,10 +28,77 @@ public class LeaderBoardServer extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Leaderboard Server");
         primaryStage.show();
-        Thread t1 = new Thread(() -> connectToClient());
-        t1.start();
+        new Thread( () -> {
+
+            try {
+                ServerSocket serverSocket = new ServerSocket(8000);
+                Platform.runLater(() -> ta.appendText("Server started at " +
+                        new Date() + '\n'));
+                while(true) {
+                    Socket socket = serverSocket.accept();
+                    new Thread(new HandleAClient(socket)).start();
+                }
+            }
+            catch(IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
+    class HandleAClient implements Runnable {
+        private Socket socket;
+
+        public HandleAClient(Socket socket) {
+            this.socket = socket;
+        }
+
+        public void run() {
+            try {
+                //Display the client number
+                Platform.runLater(() -> ta.appendText("Connected to a client at " +
+                        new Date() + '\n'));
+
+                //Create data input and output streams
+                DataInputStream isFromClient = new DataInputStream(socket.getInputStream());
+                DataOutputStream osToClient = new DataOutputStream(socket.getOutputStream());
+
+                //Continuously server the client
+                while (true) {
+                    Platform.runLater(() -> ta.appendText("Beginning sync with client side at  " +
+                            new Date() + '\n'));
+                    load();
+                    PrintWriter writer = new PrintWriter(osToClient, true);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(isFromClient));
+                    for (int i = 0; i < 8; i++) {
+                        writer.println(scores[i]);
+                        writer.println(names[i]);
+                    }
+                    save();
+                    score = Integer.parseInt(reader.readLine());
+                    name = reader.readLine();
+
+                    for (int i = 0; i < 8; i++) {
+                        if (scores[i] < score) {
+                            for (int j = 7; j > i; j--) {
+                                scores[j] = scores[j - 1];
+                                names[j] = names[j - 1];
+                            }
+                            scores[i] = score;
+                            names[i] = name;
+                            break;
+                        }
+                    }
+                    save();
+                    Platform.runLater(() -> ta.appendText("Closing sync with client side at  " + new Date() + '\n'));
+                }
+            } catch (
+                    IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     private void save() {
         Platform.runLater(() -> ta.appendText("Saving data into leaderboard.csv at " +
                 new Date() + '\n'));
@@ -68,57 +135,6 @@ public class LeaderBoardServer extends Application {
         }
         //if text file is invalid
         catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void connectToClient() {
-        try {
-            ServerSocket serverSocket = new ServerSocket(8000);
-            Platform.runLater(() -> ta.appendText("Server started at " +
-                    new Date() + '\n'));
-
-            Socket connectToClient = serverSocket.accept();
-
-            //Display the client number
-            Platform.runLater(() -> ta.appendText("Connected to a client at " +
-                    new Date() + '\n'));
-
-            //Create data input and output streams
-            DataInputStream isFromClient = new DataInputStream(connectToClient.getInputStream());
-            DataOutputStream osToClient = new DataOutputStream(connectToClient.getOutputStream());
-
-            //Continuously server the client
-            while (true) {
-                Platform.runLater(() -> ta.appendText("Beginning sync with client side at  " +
-                        new Date() + '\n'));
-                load();
-                PrintWriter writer = new PrintWriter(osToClient, true);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(isFromClient));
-                for(int i=0; i<8; i++) {
-                    writer.println(scores[i]);
-                    writer.println(names[i]);
-                }
-                save();
-                score = Integer.parseInt(reader.readLine());
-                name = reader.readLine();
-
-                for (int i = 0; i < 8; i++) {
-                    if (scores[i] < score) {
-                        for (int j = 7; j > i; j--) {
-                            scores[j] = scores[j - 1];
-                            names[j] = names[j-1];
-                        }
-                        scores[i] = score;
-                        names[i] = name;
-                        break;
-                    }
-                }
-                save();
-                Platform.runLater(() -> ta.appendText("Closing sync with client side at  " +
-                        new Date() + '\n'));
-            }
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

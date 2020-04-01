@@ -391,6 +391,7 @@ public class GameSceneController {
         }
 
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
+            Main.firstStartup = false;
             animationTimer.stop();
             moveRight = false;
             moveLeft = false;

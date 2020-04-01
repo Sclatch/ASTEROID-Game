@@ -47,7 +47,7 @@ public class ScoreSceneController {
     private void keyPressed(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-
+            Main.firstStartup = true;
             FadeTransition fadeTransition = new Intro().fadeOut(((Scene) keyEvent.getSource()).getRoot());
             fadeTransition.play();
             fadeTransition.setOnFinished(actionEvent -> {
