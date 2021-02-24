@@ -1,4 +1,4 @@
-# CSCI 2020 Final Project
+# ASTEROID-Like Game
 This is the git repository of Final Project of CSCI 2020 Winter Semester. This is a video game project called "ASTEROIDS" that has the requested features.
 
 ## Getting Started
